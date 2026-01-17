@@ -30,7 +30,7 @@ describe("App", () => {
 		render(<App />);
 
 		// Check for title
-		expect(screen.getByText("CommuteCheck")).toBeInTheDocument();
+		expect(screen.getByText("Commute Check")).toBeInTheDocument();
 
 		// Check for toggle buttons
 		expect(screen.getByText("Destinations")).toBeInTheDocument();

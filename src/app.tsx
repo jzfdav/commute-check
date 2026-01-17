@@ -71,8 +71,10 @@ export function App() {
 	return (
 		<div className="container">
 			<Toaster position="bottom-center" theme="dark" />
-			<header className="flex flex-row justify-between items-center py-2 mb-2 gap-2">
-				<h1 className="text-xl font-bold whitespace-nowrap">CommuteCheck</h1>
+			<header className="app-header">
+				<h1 className="text-lg tracking-tight uppercase font-black">
+					Commute Check
+				</h1>
 				<div className="tabs card flex gap-1 p-1 text-xs">
 					<button
 						type="button"
