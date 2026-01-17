@@ -56,5 +56,15 @@ describe("Calculations", () => {
 			expect(getTrafficStress(mockRouteFast).label).toBe("Low");
 			expect(getTrafficStress(mockRouteFast).color).toContain("success-green");
 		});
+
+		it("should handle zero duration (unknown stress)", () => {
+			const zeroRoute: RouteData = {
+				distance: 1000,
+				duration: 0,
+				geometry: "",
+			};
+			expect(getTrafficStress(zeroRoute).label).toBe("Unknown");
+			expect(getTrafficStress(zeroRoute).color).toContain("text-dim");
+		});
 	});
 });

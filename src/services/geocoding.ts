@@ -2,6 +2,17 @@ import type { Location } from "../types";
 
 const NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/search";
 
+/**
+ * Searches for a location using the Nominatim (OpenStreetMap) API.
+ *
+ * @param {string} query - The address or place name to search for.
+ * @returns {Promise<Location[]>} A promise that resolves to an array of found locations.
+ * @throws {Error} If the network request fails.
+ *
+ * @example
+ * const results = await searchLocation("New York");
+ * console.log(results[0].lat, results[0].lng);
+ */
 export async function searchLocation(query: string): Promise<Location[]> {
 	if (!query || query.length < 3) return [];
 
@@ -33,6 +44,7 @@ export async function searchLocation(query: string): Promise<Location[]> {
 				lng: parseFloat(item.lon),
 			}),
 		);
+
 		localStorage.setItem(cacheKey, JSON.stringify(results));
 		return results;
 	} catch (error) {

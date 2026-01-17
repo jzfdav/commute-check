@@ -2,6 +2,18 @@ import type { RouteData } from "../types";
 
 const OSRM_BASE_URL = "https://router.project-osrm.org/route/v1/driving";
 
+/**
+ * Fetches driving route data between two coordinates using the OSRM API.
+ *
+ * @param {[number, number]} start - The starting [latitude, longitude].
+ * @param {[number, number]} end - The ending [latitude, longitude].
+ * @returns {Promise<RouteData>} A promise that resolves to the route data (distance, duration, geometry).
+ * @throws {Error} If the API request fails or no route is found.
+ *
+ * @example
+ * const route = await fetchRoute([12.91, 77.64], [12.95, 77.65]);
+ * console.log(route.duration); // seconds
+ */
 export async function fetchRoute(
 	start: [number, number],
 	end: [number, number],

@@ -22,3 +22,15 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Testing coverage
+coverage
+
+# App PID
+.app.pid
+
+# Testing coverage
+coverage
+
+# App PID
+.app.pid
