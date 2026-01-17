@@ -36,4 +36,9 @@ export default defineConfig({
 			"react/jsx-runtime": "preact/jsx-runtime",
 		},
 	},
+	test: {
+		environment: "jsdom",
+		globals: true,
+		setupFiles: [],
+	},
 });

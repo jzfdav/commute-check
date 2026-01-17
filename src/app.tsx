@@ -1,8 +1,13 @@
 import { useEffect, useState } from "preact/hooks";
+import { Toaster, toast } from "sonner";
 import { LocationSearch } from "./components/LocationSearch";
 import { CommuteMap } from "./components/Map";
 import { fetchRoute } from "./services/osrm";
 import type { ComparisonMode, Location, RouteData } from "./types";
+import {
+	calculateMonthlySavings,
+	getTrafficStress,
+} from "./utils/calculations";
 import "./app.css";
 
 // Default mock locations (Bengaluru)
@@ -54,32 +59,13 @@ export function App() {
 			setRouteB(rB);
 		} catch (err) {
 			console.error(err);
-			// Optional: clear routes or show error state
-			// setRouteA(null);
-			// setRouteB(null);
+			toast.error("Failed to fetch routes. Please check your connection.");
 		}
-	};
-
-	const calculateMonthlySavings = () => {
-		if (!routeA || !routeB) return 0;
-		const diffSeconds = Math.abs(routeA.duration - routeB.duration);
-		const roundTripDaily = diffSeconds * 2;
-		const monthlySeconds = roundTripDaily * 22;
-		return Math.round(monthlySeconds / 3600);
-	};
-
-	const getTrafficStress = (route: RouteData) => {
-		// Stress score based on speed (distance / duration)
-		// Low speed = high stress
-		const speedKmh = route.distance / 1000 / (route.duration / 3600);
-		if (speedKmh < 15) return { label: "High", color: "var(--error-red)" };
-		if (speedKmh < 30)
-			return { label: "Moderate", color: "var(--warning-amber)" };
-		return { label: "Low", color: "var(--success-green)" };
 	};
 
 	return (
 		<div className="container">
+			<Toaster position="bottom-center" theme="dark" />
 			<header className="flex justify-between items-center mb-4 mt-4">
 				<h1>Commute Check</h1>
 				<div className="tabs card flex gap-2">
@@ -154,7 +140,6 @@ export function App() {
 						routeB={routeB}
 						mode={mode}
 					/>
-
 					<div className="comparison-cards flex gap-4">
 						{routeA && (
 							<div className="card flex-1 border-A">
@@ -223,7 +208,10 @@ export function App() {
 								</p>
 								<p className="savings">
 									You save approximately{" "}
-									<strong>{calculateMonthlySavings()} hours</strong> per month!
+									<strong>
+										{calculateMonthlySavings(routeA, routeB)} hours
+									</strong>{" "}
+									per month!
 								</p>
 							</div>
 						) : (
