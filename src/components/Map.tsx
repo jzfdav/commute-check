@@ -12,6 +12,8 @@ import L from "leaflet";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
+import { useEffect, useMemo } from "preact/hooks";
+import type { Location, RouteData } from "../types";
 
 const DefaultIcon = L.Icon.Default as unknown as {
 	prototype: { _getIconUrl?: string };
