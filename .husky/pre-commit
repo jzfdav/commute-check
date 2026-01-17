@@ -1,2 +1,3 @@
+npx tsc -b
 npx biome check --write .
 git add .

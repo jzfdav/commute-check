@@ -63,25 +63,30 @@ export function App() {
 		}
 	};
 
+	const handleModeSwitch = (newMode: ComparisonMode) => {
+		console.log(`[App] Comparison mode switched to: ${newMode}`);
+		setMode(newMode);
+	};
+
 	return (
 		<div className="container">
 			<Toaster position="bottom-center" theme="dark" />
-			<header className="flex justify-between items-center mb-4 mt-4">
-				<h1>Commute Check</h1>
-				<div className="tabs card flex gap-2">
+			<header className="flex flex-row justify-between items-center py-2 mb-2 gap-2">
+				<h1 className="text-xl font-bold whitespace-nowrap">CommuteCheck</h1>
+				<div className="tabs card flex gap-1 p-1 text-xs">
 					<button
 						type="button"
 						className={mode === "destinations" ? "active" : ""}
-						onClick={() => setMode("destinations")}
+						onClick={() => handleModeSwitch("destinations")}
 					>
-						Compare Destinations
+						Destinations
 					</button>
 					<button
 						type="button"
 						className={mode === "origins" ? "active" : ""}
-						onClick={() => setMode("origins")}
+						onClick={() => handleModeSwitch("origins")}
 					>
-						Compare Origins
+						Origins
 					</button>
 				</div>
 			</header>
