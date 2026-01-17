@@ -1,106 +1,108 @@
 .grid-layout {
-  display: grid;
-  grid-template-columns: 350px 1fr;
-  gap: 24px;
+	display: grid;
+	grid-template-columns: 350px 1fr;
+	gap: 24px;
 }
 
 @media (max-width: 768px) {
-  .grid-layout {
-    grid-template-columns: 1fr;
-  }
+	.grid-layout {
+		grid-template-columns: 1fr;
+	}
 }
 
 .tabs button {
-  padding: 8px 16px;
-  background: transparent;
-  color: var(--text-dim);
-  font-weight: 600;
-  transition: all 0.2s;
+	padding: 8px 16px;
+	background: transparent;
+	color: var(--text-dim);
+	font-weight: 600;
+	transition: all 0.2s;
 }
 
 .tabs button.active {
-  background: var(--primary-color);
-  color: white;
+	background: var(--primary-color);
+	color: white;
 }
 
 .input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
 }
 
 .input-group label {
-  font-size: 12px;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+	font-size: 12px;
+	color: var(--text-dim);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
 }
 
 .metric {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 8px;
-  font-size: 1.1rem;
+	display: flex;
+	justify-content: space-between;
+	margin-top: 8px;
+	font-size: 1.1rem;
 }
 
 .metric .label {
-  color: var(--text-dim);
+	color: var(--text-dim);
 }
 
 .metric .value {
-  font-weight: 700;
+	font-weight: 700;
 }
 
 .border-A {
-  border-top: 4px solid var(--primary-color);
+	border-top: 4px solid var(--primary-color);
 }
 
 .border-B {
-  border-top: 4px solid var(--secondary-color);
+	border-top: 4px solid var(--secondary-color);
 }
 
 .verdict-card {
-  text-align: center;
-  background: linear-gradient(145deg, #1e1e1e, #252525);
+	text-align: center;
+	background: linear-gradient(145deg, #1e1e1e, #252525);
 }
 
 .verdict-content {
-  margin-top: 16px;
+	margin-top: 16px;
 }
 
 .savings {
-  font-size: 1.5rem;
-  margin-top: 8px;
+	font-size: 1.5rem;
+	margin-top: 8px;
 }
 
 .savings strong {
-  color: var(--success-green);
+	color: var(--success-green);
 }
 
 .success {
-  color: var(--success-green);
-  font-weight: 600;
+	color: var(--success-green);
+	font-weight: 600;
 }
 
 .text-dim {
-  color: var(--text-dim);
+	color: var(--text-dim);
 }
 
 .text-center {
-  text-align: center;
+	text-align: center;
 }
 
 .hint {
-  font-size: 12px;
-  font-style: italic;
-  color: var(--text-dim);
+	font-size: 12px;
+	font-style: italic;
+	color: var(--text-dim);
 }
 
-h1, h2, h3 {
-  letter-spacing: -0.5px;
+h1,
+h2,
+h3 {
+	letter-spacing: -0.5px;
 }
 
 h2 {
-  font-size: 1.2rem;
-  margin-bottom: 8px;
+	font-size: 1.2rem;
+	margin-bottom: 8px;
 }
