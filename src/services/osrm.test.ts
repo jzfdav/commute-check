@@ -4,7 +4,7 @@ import { fetchRoute } from "./osrm";
 describe("fetchRoute", () => {
 	beforeEach(() => {
 		localStorage.clear();
-		vi.spyOn(global, "fetch");
+		vi.spyOn(globalThis, "fetch");
 	});
 
 	afterEach(() => {
