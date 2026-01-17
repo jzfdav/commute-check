@@ -1,0 +1,23 @@
+build an app for commute comparison.
+
+core concept: the user needs to be decide between 2 moving options
+two different office locations vs one home / vice versa
+
+
+Technical Requirements:
+
+State Management: Use a clean state solution (like Provider or Riverpod) to manage two 'Route' objects: RouteA and RouteB.
+
+UI Layout:
+Create a top 'Input Section' with two tabs: 'Compare Destinations' and 'Compare Origins'.
+Below the inputs, create a Vertical Split-View or a Side-by-Side Comparison Card.
+Each card must display: Travel Time (ETA), Distance, and a 'Traffic Stress Score' (calculated based on time vs. distance).
+
+Maps Integration: Use google_maps_flutter to show two mini-map previews or one unified map with two color-coded polylines (Blue for A, Purple for B).
+The 'Decision' Engine: Include a 'Verdict' widget at the bottom that dynamically calculates which route saves the user more hours per month (assuming 22 working days, twice a day).
+
+Vibe/Styling: Use a modern, high-contrast dark mode theme with 'Success Green' for the faster route and 'Warning Amber' for the slower one. Use the google_fonts package (Inter or Montserrat).
+
+Local Context: Default the mock data to Bengaluru (e.g., HSR Layout to EGL vs. HSR Layout to Manyata Tech Park) to test the long-distance traffic logic."
+
+I don't want to pay for any API usage, so use only free APIs, and agressively cache to avoid hitting rate limits.
