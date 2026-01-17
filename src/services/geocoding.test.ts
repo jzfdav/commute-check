@@ -4,7 +4,7 @@ import { searchLocation } from "./geocoding";
 describe("searchLocation", () => {
 	beforeEach(() => {
 		localStorage.clear();
-		vi.spyOn(globalThis, "fetch");
+		globalThis.fetch = vi.fn();
 	});
 
 	afterEach(() => {
@@ -31,10 +31,10 @@ describe("searchLocation", () => {
 			{ display_name: "New Place", lat: "12.34", lon: "56.78" },
 		];
 
-		(fetch as any).mockResolvedValue({
+		vi.mocked(fetch).mockResolvedValue({
 			ok: true,
 			json: async () => mockResponse,
-		});
+		} as Response);
 
 		const results = await searchLocation("New Place");
 
@@ -46,9 +46,9 @@ describe("searchLocation", () => {
 	});
 
 	it("should handle API errors gracefully", async () => {
-		(fetch as any).mockResolvedValue({
+		vi.mocked(fetch).mockResolvedValue({
 			ok: false,
-		});
+		} as Response);
 
 		const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 		const results = await searchLocation("Error Place");
@@ -58,7 +58,7 @@ describe("searchLocation", () => {
 	});
 
 	it("should handle network errors gracefully", async () => {
-		(fetch as any).mockRejectedValue(new Error("Network error"));
+		vi.mocked(fetch).mockRejectedValue(new Error("Network error"));
 
 		const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 		const results = await searchLocation("Network Error");

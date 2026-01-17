@@ -46,7 +46,7 @@ describe("App", () => {
 
 		// Verify logging
 		expect(consoleSpy).toHaveBeenCalledWith(
-			"[App] Comparison mode switched to: origins",
+			"[useCommuteComparison] Comparison mode switched to: origins",
 		);
 
 		// Verify active state (class check)

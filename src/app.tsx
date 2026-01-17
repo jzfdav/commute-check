@@ -1,72 +1,28 @@
-import { useEffect, useState } from "preact/hooks";
-import { Toaster, toast } from "sonner";
+import { Toaster } from "sonner";
 import { LocationSearch } from "./components/LocationSearch";
 import { CommuteMap } from "./components/Map";
-import { fetchRoute } from "./services/osrm";
-import type { ComparisonMode, Location, RouteData } from "./types";
+import { useCommuteComparison } from "./hooks/useCommuteComparison";
 import {
 	calculateMonthlySavings,
 	getTrafficStress,
 } from "./utils/calculations";
 import "./app.css";
 
-// Default mock locations (Bengaluru)
-const DEFAULT_ORIGIN: Location = {
-	name: "HSR Layout, Bengaluru",
-	lat: 12.9121,
-	lng: 77.6446,
-};
-const DEFAULT_DEST_A: Location = {
-	name: "EGL (Embassy GolfLinks), Bengaluru",
-	lat: 12.9468,
-	lng: 77.648,
-};
-const DEFAULT_DEST_B: Location = {
-	name: "Manyata Tech Park, Bengaluru",
-	lat: 13.0451,
-	lng: 77.6266,
-};
-
 export function App() {
-	const [mode, setMode] = useState<ComparisonMode>("destinations");
-	const [originA, setOriginA] = useState<Location>(DEFAULT_ORIGIN);
-	const [originB, setOriginB] = useState<Location>(DEFAULT_ORIGIN);
-	const [destA, setDestA] = useState<Location>(DEFAULT_DEST_A);
-	const [destB, setDestB] = useState<Location>(DEFAULT_DEST_B);
-
-	const [routeA, setRouteA] = useState<RouteData | null>(null);
-	const [routeB, setRouteB] = useState<RouteData | null>(null);
-
-	useEffect(() => {
-		updateRoutes();
-	}, [originA, originB, destA, destB, mode]);
-
-	const updateRoutes = async () => {
-		try {
-			const p1 = fetchRoute([originA.lat, originA.lng], [destA.lat, destA.lng]);
-			const p2 = fetchRoute(
-				mode === "destinations"
-					? [originA.lat, originA.lng]
-					: [originB.lat, originB.lng],
-				mode === "destinations"
-					? [destB.lat, destB.lng]
-					: [destA.lat, destA.lng],
-			);
-
-			const [rA, rB] = await Promise.all([p1, p2]);
-
-			setRouteA(rA);
-			setRouteB(rB);
-		} catch (err) {
-			console.error(err);
-			toast.error("Failed to fetch routes. Please check your connection.");
-		}
-	};
-
-	const handleModeSwitch = (newMode: ComparisonMode) => {
-		console.log(`[App] Comparison mode switched to: ${newMode}`);
-		setMode(newMode);
-	};
+	const {
+		mode,
+		handleModeSwitch,
+		originA,
+		setOriginA,
+		originB,
+		setOriginB,
+		destA,
+		setDestA,
+		destB,
+		setDestB,
+		routeA,
+		routeB,
+	} = useCommuteComparison();
 
 	return (
 		<div className="container">

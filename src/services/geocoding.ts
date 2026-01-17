@@ -1,6 +1,5 @@
+import { CONFIG } from "../config";
 import type { Location } from "../types";
-
-const NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/search";
 
 /**
  * Searches for a location using the Nominatim (OpenStreetMap) API.
@@ -23,7 +22,7 @@ export async function searchLocation(query: string): Promise<Location[]> {
 		return JSON.parse(cached);
 	}
 
-	const url = `${NOMINATIM_BASE_URL}?q=${encodeURIComponent(query)}&format=json&limit=5`;
+	const url = `${CONFIG.NOMINATIM_BASE_URL}?q=${encodeURIComponent(query)}&format=json&limit=5`;
 
 	try {
 		const response = await fetch(url, {

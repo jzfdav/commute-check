@@ -38,7 +38,7 @@ describe("LocationSearch", () => {
 
 	it("searches and displays results", async () => {
 		const mockResults = [{ name: "Result 1", lat: 1, lng: 1 }];
-		(geocodingService.searchLocation as any).mockResolvedValue(mockResults);
+		vi.mocked(geocodingService.searchLocation).mockResolvedValue(mockResults);
 
 		render(
 			<LocationSearch
@@ -63,7 +63,7 @@ describe("LocationSearch", () => {
 
 	it("selects a location from dropdown", async () => {
 		const mockResults = [{ name: "Selected Place", lat: 30, lng: 40 }];
-		(geocodingService.searchLocation as any).mockResolvedValue(mockResults);
+		vi.mocked(geocodingService.searchLocation).mockResolvedValue(mockResults);
 
 		render(
 			<LocationSearch

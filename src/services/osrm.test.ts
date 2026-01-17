@@ -4,7 +4,7 @@ import { fetchRoute } from "./osrm";
 describe("fetchRoute", () => {
 	beforeEach(() => {
 		localStorage.clear();
-		vi.spyOn(globalThis, "fetch");
+		globalThis.fetch = vi.fn();
 	});
 
 	afterEach(() => {
@@ -25,10 +25,10 @@ describe("fetchRoute", () => {
 			routes: [{ distance: 500, duration: 60, geometry: "abc" }],
 		};
 
-		(fetch as any).mockResolvedValue({
+		vi.mocked(fetch).mockResolvedValue({
 			ok: true,
 			json: async () => mockResponse,
-		});
+		} as Response);
 
 		const result = await fetchRoute([10, 20], [30, 40]);
 
@@ -39,10 +39,10 @@ describe("fetchRoute", () => {
 	});
 
 	it("should throw error if API returns no routes", async () => {
-		(fetch as any).mockResolvedValue({
+		vi.mocked(fetch).mockResolvedValue({
 			ok: true,
 			json: async () => ({ routes: [] }),
-		});
+		} as Response);
 
 		const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 		await expect(fetchRoute([10, 20], [30, 40])).rejects.toThrow(
@@ -52,9 +52,9 @@ describe("fetchRoute", () => {
 	});
 
 	it("should throw error on API failure", async () => {
-		(fetch as any).mockResolvedValue({
+		vi.mocked(fetch).mockResolvedValue({
 			ok: false,
-		});
+		} as Response);
 
 		const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 		await expect(fetchRoute([10, 20], [30, 40])).rejects.toThrow(
@@ -68,10 +68,10 @@ describe("fetchRoute", () => {
 		const mockResponse = {
 			routes: [{ distance: 500, duration: 60, geometry: "abc" }],
 		};
-		(fetch as any).mockResolvedValue({
+		vi.mocked(fetch).mockResolvedValue({
 			ok: true,
 			json: async () => mockResponse,
-		});
+		} as Response);
 
 		const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
 		const result = await fetchRoute([10, 20], [30, 40]);

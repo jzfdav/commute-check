@@ -1,6 +1,5 @@
+import { CONFIG } from "../config";
 import type { RouteData } from "../types";
-
-const OSRM_BASE_URL = "https://router.project-osrm.org/route/v1/driving";
 
 /**
  * Fetches driving route data between two coordinates using the OSRM API.
@@ -29,7 +28,7 @@ export async function fetchRoute(
 		}
 	}
 
-	const url = `${OSRM_BASE_URL}/${start[1]},${start[0]};${end[1]},${end[0]}?overview=full&geometries=polyline`;
+	const url = `${CONFIG.OSRM_BASE_URL}/${start[1]},${start[0]};${end[1]},${end[0]}?overview=full&geometries=polyline`;
 
 	try {
 		const response = await fetch(url);
