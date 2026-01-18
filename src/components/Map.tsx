@@ -84,9 +84,8 @@ export function CommuteMap({
 	return (
 		<div
 			style={{
-				height: "400px",
+				height: "100%",
 				width: "100%",
-				borderRadius: "8px",
 				overflow: "hidden",
 			}}
 		>
@@ -94,11 +93,12 @@ export function CommuteMap({
 				center={[originA.lat, originA.lng]}
 				zoom={12}
 				style={{ height: "100%", width: "100%" }}
+				zoomControl={false} // We can add custom zoom controls later
 			>
 				<TileLayer
 					attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-					className="map-tiles"
+					className="map-tiles map-tiles-dark"
 				/>
 
 				{routeA && (

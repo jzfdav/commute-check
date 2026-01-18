@@ -1,54 +1,127 @@
-.grid-layout {
-	display: grid;
-	grid-template-columns: 350px 1fr;
-	gap: 24px;
+:root {
+	--bg-color: #121212;
+	--card-bg: rgba(30, 30, 30, 0.95);
+	--text-color: #e0e0e0;
+	--text-dim: #b0b0b0;
+	--primary-color: #3f51b5;
+	--secondary-color: #9c27b0;
+	--success-green: #4caf50;
+	--warning-amber: #ffc107;
+	--error-red: #f44336;
+	--border-color: #333;
+	--header-height: 52px;
 }
 
-@media (max-width: 768px) {
-	.grid-layout {
-		grid-template-columns: 1fr;
-	}
+/* Base resets handled in index.css */
+
+.immersive-container {
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
 }
 
-.tabs button {
-	padding: 8px 16px;
-	background: transparent;
-	color: var(--text-dim);
-	font-weight: 600;
-	transition: all 0.2s;
+/* Map takes full screen */
+.map-layer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 0;
 }
 
-.tabs button.active {
-	background: var(--primary-color);
-	color: white;
-}
-
-.input-group {
+/* Overlay UI Container */
+.ui-layer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 10;
+	pointer-events: none;
+	/* Let clicks pass through to map where empty */
 	display: flex;
 	flex-direction: column;
-	gap: 4px;
 }
 
-.input-group label {
-	font-size: 12px;
-	color: var(--text-dim);
-	text-transform: uppercase;
-	letter-spacing: 0.5px;
-}
-
-.metric {
+/* Header */
+.app-header {
+	pointer-events: auto;
+	background: var(--card-bg);
+	backdrop-filter: blur(8px);
+	padding: 0 12px;
 	display: flex;
 	justify-content: space-between;
-	margin-top: 8px;
-	font-size: 1.1rem;
+	align-items: center;
+	border-bottom: 1px solid var(--border-color);
+	height: var(--header-height);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
-.metric .label {
-	color: var(--text-dim);
+.brand {
+	display: flex;
+	align-items: center;
+	gap: 8px;
 }
 
-.metric .value {
-	font-weight: 700;
+/* Floating Panels */
+.panels-container {
+	flex: 1;
+	display: flex;
+	padding: 16px;
+	gap: 16px;
+	overflow: hidden;
+}
+
+/* Input Panel (Desktop: Left Side) */
+.floating-panel {
+	pointer-events: auto;
+	background: var(--card-bg);
+	backdrop-filter: blur(8px);
+	border-radius: 12px;
+	padding: 16px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+	border: 1px solid var(--border-color);
+	display: flex;
+	flex-direction: column;
+	max-height: 100%;
+	overflow-y: auto;
+	transition: transform 0.3s ease;
+}
+
+.input-panel {
+	width: 350px;
+}
+
+/* Results Panel (Desktop: Bottom Floating) */
+.results-container {
+	pointer-events: auto;
+	position: absolute;
+	bottom: 24px;
+	left: 50%;
+	transform: translateX(-50%);
+	display: flex;
+	gap: 16px;
+	align-items: flex-end;
+	width: 90%;
+	max-width: 800px;
+}
+
+.result-card {
+	background: var(--card-bg);
+	backdrop-filter: blur(8px);
+	border-radius: 12px;
+	padding: 16px;
+	flex: 1;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+	border: 1px solid var(--border-color);
+	transition: all 0.3s ease;
+}
+
+.result-card:hover {
+	border-color: rgba(255, 255, 255, 0.2);
+	transform: translateY(-4px);
 }
 
 .border-A {
@@ -59,68 +132,118 @@
 	border-top: 4px solid var(--secondary-color);
 }
 
-.verdict-card {
+.verdict-pill {
+	background: var(--success-green);
+	color: white;
+	padding: 8px 16px;
+	border-radius: 20px;
+	font-weight: bold;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 	text-align: center;
-	background: linear-gradient(145deg, #1e1e1e, #252525);
-}
-
-.verdict-content {
-	margin-top: 16px;
-}
-
-.savings {
-	font-size: 1.5rem;
-	margin-top: 8px;
-}
-
-.savings strong {
-	color: var(--success-green);
-}
-
-.success {
-	color: var(--success-green);
-	font-weight: 600;
-}
-
-.text-dim {
-	color: var(--text-dim);
-}
-
-.text-center {
-	text-align: center;
-}
-
-.hint {
-	font-size: 12px;
-	font-style: italic;
-	color: var(--text-dim);
-}
-
-h1,
-h2,
-h3 {
-	letter-spacing: -0.5px;
-}
-
-h2 {
-	font-size: 1.2rem;
 	margin-bottom: 8px;
 }
 
-.app-header {
+/* Metrics */
+.metric {
 	display: flex;
-	flex-direction: column;
-	align-items: center;
-	gap: 12px;
-	padding: 16px 0;
-	margin-bottom: 8px;
-	width: 100%;
+	justify-content: space-between;
+	margin-top: 8px;
+	font-size: 0.95rem;
 }
 
-@media (min-width: 640px) {
-	.app-header {
-		flex-direction: row;
-		justify-content: space-between;
+.metric .label {
+	color: var(--text-dim);
+	display: flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.metric .value {
+	font-weight: 700;
+}
+
+.stress-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 12px;
+}
+
+/* Animations */
+@keyframes slideUp {
+	from {
+		transform: translateY(20px);
+		opacity: 0;
+	}
+
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+.animate-in {
+	animation: slideUp 0.4s ease-out forwards;
+}
+
+/* Tabs */
+.tabs {
+	background: rgba(0, 0, 0, 0.3);
+	border-radius: 8px;
+	padding: 4px;
+	display: flex;
+	gap: 4px;
+}
+
+.tabs button {
+	padding: 4px 10px;
+	background: transparent;
+	color: var(--text-dim);
+	font-size: 0.75rem;
+	font-weight: 600;
+	border-radius: 6px;
+	transition: all 0.2s;
+}
+
+.tabs button.active {
+	background: var(--primary-color);
+	color: white;
+}
+
+/* Mobile Layout */
+@media (max-width: 768px) {
+	.panels-container {
+		flex-direction: column;
+		padding: 0;
+	}
+
+	.input-panel {
+		width: 100%;
+		border-radius: 0 0 12px 12px;
+		max-height: 40vh;
+	}
+
+	.results-container {
+		flex-direction: column;
+		bottom: 0;
+		width: 100%;
+		border-radius: 12px 12px 0 0;
+		background: var(--card-bg);
 		padding: 16px;
+		gap: 12px;
+		transform: none;
+		left: 0;
+	}
+
+	.app-header {
+		padding: 0 8px;
+	}
+
+	.brand h1 {
+		font-size: 1rem;
+	}
+
+	.verdict-pill {
+		width: 100%;
 	}
 }

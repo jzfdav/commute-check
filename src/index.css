@@ -71,63 +71,75 @@ input:focus {
 .flex {
 	display: flex;
 }
+
 .flex-col {
 	flex-direction: column;
 }
+
 .items-center {
 	align-items: center;
 }
+
 .justify-between {
 	justify-content: space-between;
 }
+
 .gap-1 {
 	gap: 4px;
 }
+
 .gap-2 {
 	gap: 8px;
 }
+
 .gap-3 {
 	gap: 12px;
 }
+
 .gap-4 {
 	gap: 16px;
 }
+
 .py-2 {
 	padding-top: 8px;
 	padding-bottom: 8px;
 }
+
 .py-4 {
 	padding-top: 16px;
 	padding-bottom: 16px;
 }
+
 .text-xs {
 	font-size: 12px;
 }
+
 .text-lg {
 	font-size: 18px;
 }
+
 .font-black {
 	font-weight: 900;
 }
+
 .uppercase {
 	text-transform: uppercase;
 }
+
 .tracking-tight {
 	letter-spacing: -0.5px;
 }
+
 .p-1 {
 	padding: 4px;
 }
+
 .dropdown-item:hover {
 	background-color: #333;
 }
 
-.map-tiles {
-	filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
-}
-
 #app .leaflet-container {
-	background: #1a1a1a;
+	background: #f0f0f0;
 }
 
 #app .leaflet-bar a {
@@ -141,16 +153,63 @@ input:focus {
 	background: #2a2a2a;
 	color: white;
 }
+
+/* Map Dark Mode Filter */
+.map-tiles-dark {
+	filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+/* Stress Score Badges */
+.stress-badge {
+	padding: 2px 8px;
+	border-radius: 12px;
+	font-size: 10px;
+	font-weight: 800;
+	text-transform: uppercase;
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.stress-high {
+	background: rgba(244, 67, 54, 0.2);
+	color: #ff5252;
+	border: 1px solid rgba(244, 67, 54, 0.3);
+}
+
+.stress-moderate {
+	background: rgba(255, 193, 7, 0.2);
+	color: #ffd740;
+	border: 1px solid rgba(255, 193, 7, 0.3);
+}
+
+.stress-low {
+	background: rgba(76, 175, 80, 0.2);
+	color: #69f0ae;
+	border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+/* Glassmorphism Refinement */
+.glass {
+	background: rgba(30, 30, 30, 0.7);
+	backdrop-filter: blur(12px) saturate(180%);
+	-webkit-backdrop-filter: blur(12px) saturate(180%);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 ::-webkit-scrollbar {
 	width: 8px;
 }
+
 ::-webkit-scrollbar-track {
 	background: #1e1e1e;
 }
+
 ::-webkit-scrollbar-thumb {
 	background: #333;
 	border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
 	background: #444;
 }
