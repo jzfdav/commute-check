@@ -154,11 +154,6 @@ input:focus {
 	color: white;
 }
 
-/* Map Dark Mode Filter */
-.map-tiles-dark {
-	filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
-}
-
 /* Stress Score Badges */
 .stress-badge {
 	padding: 2px 8px;
