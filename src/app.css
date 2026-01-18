@@ -220,19 +220,23 @@
 	.input-panel {
 		width: 100%;
 		border-radius: 0 0 12px 12px;
-		max-height: 40vh;
+		max-height: 35vh;
+		background: rgba(30, 30, 30, 0.85);
+		/* Slightly more transparent */
 	}
 
 	.results-container {
 		flex-direction: column;
-		bottom: 0;
-		width: 100%;
-		border-radius: 12px 12px 0 0;
-		background: var(--card-bg);
-		padding: 16px;
-		gap: 12px;
+		bottom: 12px;
+		/* Float it a bit */
+		width: 95%;
+		left: 2.5%;
+		border-radius: 12px;
+		background: transparent;
+		/* VERY IMPORTANT: Remove container background */
+		padding: 0;
+		gap: 8px;
 		transform: none;
-		left: 0;
 	}
 
 	.app-header {
