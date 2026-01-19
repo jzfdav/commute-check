@@ -39,7 +39,10 @@ export async function searchLocation(
 	});
 
 	if (localMatches.length > 0) {
-		return localMatches.map((m) => ({ ...m, name: `🏢 ${m.name}` }));
+		return localMatches.map((m) => ({
+			...m,
+			name: `${m.category === "residential" ? "🏠" : "🏢"} ${m.name}`,
+		}));
 	}
 
 	// 2. Check for Plus Codes (e.g., 3HC4+76W)

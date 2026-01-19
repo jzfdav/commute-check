@@ -3,6 +3,7 @@ export interface Location {
 	lat: number;
 	lng: number;
 	city?: string;
+	category?: "office" | "residential";
 }
 
 export interface RouteData {
