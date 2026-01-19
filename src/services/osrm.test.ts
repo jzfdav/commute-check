@@ -13,7 +13,10 @@ describe("fetchRoute", () => {
 
 	it("should return cached route if available", async () => {
 		const mockRoute = { distance: 100, duration: 200, geometry: "xyz" };
-		localStorage.setItem("route_10,20_30,40", JSON.stringify(mockRoute));
+		localStorage.setItem(
+			"route_10,20_30,40_traffic_1.00",
+			JSON.stringify(mockRoute),
+		);
 
 		const result = await fetchRoute([10, 20], [30, 40]);
 		expect(result).toEqual(mockRoute);
@@ -35,7 +38,7 @@ describe("fetchRoute", () => {
 		expect(result.distance).toBe(500);
 		expect(result.duration).toBe(60);
 		expect(result.geometry).toBe("abc");
-		expect(localStorage.getItem("route_10,20_30,40")).toBeTruthy();
+		expect(localStorage.getItem("route_10,20_30,40_traffic_1.00")).toBeTruthy();
 	});
 
 	it("should throw error if API returns no routes", async () => {
@@ -64,7 +67,7 @@ describe("fetchRoute", () => {
 	});
 
 	it("should handle corrupt cache gracefully", async () => {
-		localStorage.setItem("route_10,20_30,40", "invalid-json");
+		localStorage.setItem("route_10,20_30,40_traffic_1.00", "invalid-json");
 		const mockResponse = {
 			routes: [{ distance: 500, duration: 60, geometry: "abc" }],
 		};

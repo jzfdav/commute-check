@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { RouteData } from "../types";
-import { calculateMonthlySavings } from "./calculations";
+import { calculateMonthlySavings, formatDuration } from "./calculations";
 
 describe("Calculations", () => {
 	const mockRouteFast: RouteData = {
@@ -27,6 +27,20 @@ describe("Calculations", () => {
 		it("should return 0 if any route is missing", () => {
 			expect(calculateMonthlySavings(null, mockRouteSlow)).toBe(0);
 			expect(calculateMonthlySavings(mockRouteFast, null)).toBe(0);
+		});
+	});
+
+	describe("formatDuration", () => {
+		it("should format minutes correctly", () => {
+			expect(formatDuration(600)).toBe("10 mins");
+			expect(formatDuration(3540)).toBe("59 mins");
+		});
+
+		it("should format hours correctly", () => {
+			expect(formatDuration(3600)).toBe("1h");
+			expect(formatDuration(3660)).toBe("1h 1m");
+			expect(formatDuration(5400)).toBe("1h 30m");
+			expect(formatDuration(7200)).toBe("2h");
 		});
 	});
 });

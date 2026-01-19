@@ -1,17 +1,16 @@
 import { CONFIG } from "../config";
 import type { RouteData } from "../types";
-import { getTrafficHeuristic } from "./traffic";
 
 /**
  * Fetches driving route data between two coordinates using the OSRM API.
- * Applies a traffic heuristic based on the current time.
+ * Applies a traffic heuristic based on the provided multiplier.
  */
 export async function fetchRoute(
 	start: [number, number],
 	end: [number, number],
+	trafficMultiplier = 1.0,
 ): Promise<RouteData> {
-	const traffic = getTrafficHeuristic();
-	const cacheKey = `route_${start.join(",")}_${end.join(",")}_traffic_${traffic.multiplier.toFixed(2)}`;
+	const cacheKey = `route_${start.join(",")}_${end.join(",")}_traffic_${trafficMultiplier.toFixed(2)}`;
 	const cached = localStorage.getItem(cacheKey);
 
 	if (cached) {
@@ -39,7 +38,7 @@ export async function fetchRoute(
 		const route = data.routes[0];
 
 		// Apply traffic multiplier to duration
-		const adjustedDuration = route.duration * traffic.multiplier;
+		const adjustedDuration = route.duration * trafficMultiplier;
 
 		const result: RouteData = {
 			distance: route.distance,

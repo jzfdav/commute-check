@@ -53,7 +53,10 @@ describe("LocationSearch", () => {
 		fireEvent.focus(input);
 
 		await waitFor(() => {
-			expect(geocodingService.searchLocation).toHaveBeenCalledWith("Result");
+			expect(geocodingService.searchLocation).toHaveBeenCalledWith(
+				"Result",
+				undefined,
+			);
 		});
 
 		await waitFor(() => {

@@ -64,3 +64,13 @@ export function getShortName(fullName: string): string {
 	}
 	return shortName;
 }
+
+export function formatDuration(seconds: number): string {
+	const totalMinutes = Math.round(seconds / 60);
+	if (totalMinutes < 60) {
+		return `${totalMinutes} mins`;
+	}
+	const hours = Math.floor(totalMinutes / 60);
+	const minutes = totalMinutes % 60;
+	return minutes > 0 ? `${hours}h ${minutes}m` : `${hours}h`;
+}

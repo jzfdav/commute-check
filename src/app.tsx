@@ -2,7 +2,6 @@ import {
 	ArrowRight,
 	ChevronDown,
 	ChevronUp,
-	Clock,
 	Map as MapIcon,
 	MapPin,
 	Timer,
@@ -14,7 +13,11 @@ import { LocationSearch } from "./components/LocationSearch";
 import { CommuteMap } from "./components/Map";
 import { CITIES, type City, DEFAULT_CITY } from "./constants/cities";
 import { useCommuteComparison } from "./hooks/useCommuteComparison";
-import { calculateMonthlySavings, getShortName } from "./utils/calculations";
+import {
+	calculateMonthlySavings,
+	formatDuration,
+	getShortName,
+} from "./utils/calculations";
 import "./app.css";
 
 export function App() {
@@ -32,7 +35,6 @@ export function App() {
 		setDestB,
 		routeA,
 		routeB,
-		trafficInfo,
 	} = useCommuteComparison();
 
 	const [showDetails, setShowDetails] = useState(false);
@@ -351,7 +353,7 @@ export function App() {
 										<div className="footer-column">
 											<div className="flex items-center gap-2">
 												<span className="text-xs font-bold">
-													{Math.round(routeA.duration / 60)} mins
+													{formatDuration(routeA.duration)}
 												</span>
 											</div>
 											<h4
@@ -373,7 +375,7 @@ export function App() {
 										>
 											<div className="flex items-center gap-2">
 												<span className="text-xs font-bold">
-													{Math.round(routeB.duration / 60)} mins
+													{formatDuration(routeB.duration)}
 												</span>
 											</div>
 											<h4
@@ -414,12 +416,6 @@ export function App() {
 								<h2 className="text-lg font-black uppercase">
 									Comparison Details
 								</h2>
-								<div
-									className={`traffic-badge ${trafficInfo.isPeak ? "peak" : ""}`}
-								>
-									<Clock size={14} />
-									<span>{trafficInfo.label}</span>
-								</div>
 							</div>
 							<div className="route-details-card border-A">
 								<h3 className="route-name">
@@ -433,7 +429,7 @@ export function App() {
 										<div className="metric-info">
 											<span className="label">Travel Time</span>
 											<span className="value">
-												{Math.round(routeA.duration / 60)} mins
+												{formatDuration(routeA.duration)}
 											</span>
 										</div>
 									</div>
@@ -461,7 +457,7 @@ export function App() {
 										<div className="metric-info">
 											<span className="label">Travel Time</span>
 											<span className="value">
-												{Math.round(routeB.duration / 60)} mins
+												{formatDuration(routeB.duration)}
 											</span>
 										</div>
 									</div>
@@ -496,7 +492,7 @@ export function App() {
 									every month.
 								</div>
 								<p className="text-xs opacity-70 mt-2">
-									That's valuable time saved for what matters most to you!
+									Timings reflect average to worst-case traffic scenarios.
 								</p>
 							</div>
 

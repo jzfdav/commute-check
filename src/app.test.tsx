@@ -32,16 +32,24 @@ describe("App", () => {
 		// Check for title
 		expect(screen.getByText("Commute Check")).toBeInTheDocument();
 
+		// Expand input panel to see mode buttons
+		const summary = screen.getByRole("button", { name: /from/i });
+		fireEvent.click(summary);
+
 		// Check for toggle buttons
-		expect(screen.getByText("Destinations")).toBeInTheDocument();
-		expect(screen.getByText("Origins")).toBeInTheDocument();
+		expect(screen.getByText("Dest.")).toBeInTheDocument();
+		expect(screen.getByText("Orig.")).toBeInTheDocument();
 	});
 
 	it("switches mode and logs event", async () => {
 		const consoleSpy = vi.spyOn(console, "log");
 		render(<App />);
 
-		const originsBtn = screen.getByText("Origins");
+		// Expand input panel to see mode buttons
+		const summary = screen.getByRole("button", { name: /from/i });
+		fireEvent.click(summary);
+
+		const originsBtn = screen.getByText("Orig.");
 		fireEvent.click(originsBtn);
 
 		// Verify logging

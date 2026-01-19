@@ -19,8 +19,8 @@ describe("searchLocation", () => {
 
 	it("should return cached results if available", async () => {
 		const mockData = [{ name: "Cached Place", lat: 10, lng: 20 }];
-		// Note the new cache key prefix geoV2_
-		localStorage.setItem("geoV2_cached place", JSON.stringify(mockData));
+		// Note the new cache key prefix geoV3_ and default city lat 12.97
+		localStorage.setItem("geoV3_12.97_cached place", JSON.stringify(mockData));
 
 		const results = await searchLocation("Cached Place");
 		expect(results).toEqual(mockData);
@@ -53,7 +53,7 @@ describe("searchLocation", () => {
 		expect(results[0].name).toContain("New Place");
 		expect(results[0].lat).toBe(12.34);
 		expect(results[0].lng).toBe(56.78);
-		expect(localStorage.getItem("geoV2_new place")).toBeTruthy();
+		expect(localStorage.getItem("geoV3_12.97_new place")).toBeTruthy();
 	});
 
 	it("should handle API errors gracefully", async () => {
