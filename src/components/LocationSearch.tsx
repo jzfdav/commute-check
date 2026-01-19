@@ -3,11 +3,17 @@ import { useEffect, useRef, useState } from "preact/hooks";
 import { searchLocation } from "../services/geocoding";
 import type { Location } from "../types";
 
+interface CityBias {
+	lat: number;
+	lng: number;
+}
+
 interface LocationSearchProps {
 	label: string;
 	value: Location;
 	onChange: (loc: Location) => void;
 	placeholder?: string;
+	cityBias?: CityBias;
 }
 
 export function LocationSearch({
@@ -15,6 +21,7 @@ export function LocationSearch({
 	value,
 	onChange,
 	placeholder,
+	cityBias,
 }: LocationSearchProps) {
 	const [query, setQuery] = useState(value.name);
 	const [results, setResults] = useState<Location[]>([]);
@@ -32,7 +39,7 @@ export function LocationSearch({
 		const timer = setTimeout(async () => {
 			if (query.length > 2 && query !== value.name) {
 				setLoading(true);
-				const res = await searchLocation(query);
+				const res = await searchLocation(query, cityBias);
 				if (active) {
 					setResults(res);
 					setIsOpen(true);
@@ -50,7 +57,7 @@ export function LocationSearch({
 			active = false;
 			clearTimeout(timer);
 		};
-	}, [query, value.name]);
+	}, [query, value.name, cityBias]);
 
 	useEffect(() => {
 		function handleClickOutside(event: MouseEvent) {

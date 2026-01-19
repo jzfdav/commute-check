@@ -1,5 +1,6 @@
 import { OpenLocationCode as OLC } from "open-location-code";
 import { CONFIG } from "../config";
+import { DEFAULT_CITY } from "../constants/cities";
 import { TECH_PARKS } from "../constants/techParks";
 import type { Location } from "../types";
 
@@ -11,11 +12,23 @@ const OpenLocationCodeClass = (OLC.OpenLocationCode || OLC) as unknown as {
 };
 const olc = new OpenLocationCodeClass();
 
+interface CityBias {
+	lat: number;
+	lng: number;
+}
+
 /**
  * Searches for a location using Photon (fuzzy search), Plus Codes, or local catalog.
+ * @param query - Search query string
+ * @param cityBias - Optional city coordinates to bias search results
  */
-export async function searchLocation(query: string): Promise<Location[]> {
+export async function searchLocation(
+	query: string,
+	cityBias?: CityBias,
+): Promise<Location[]> {
 	if (!query || query.length < 2) return [];
+
+	const bias = cityBias || DEFAULT_CITY;
 
 	// 1. Check Local Tech Parks Catalog
 	const localMatches = TECH_PARKS.filter((park) =>
@@ -29,10 +42,9 @@ export async function searchLocation(query: string): Promise<Location[]> {
 	if (olc.isValid(query.trim())) {
 		try {
 			let code = query.trim();
-			// If it's a short code (like 3HC4+76W), we assume Bangalore context for now
-			// Global prefix for Bangalore area is 9C3V
+			// If it's a short code, recover using the city bias
 			if (olc.isShort(code)) {
-				code = olc.recoverNearest(code, 12.9716, 77.5946);
+				code = olc.recoverNearest(code, bias.lat, bias.lng);
 			}
 			const decoded = olc.decode(code);
 			return [
@@ -47,13 +59,13 @@ export async function searchLocation(query: string): Promise<Location[]> {
 		}
 	}
 
-	// 3. Fallback to Photon Fuzzy Search (biased towards Bengaluru)
-	const cacheKey = `geoV2_${query.toLowerCase()}`;
+	// 3. Fallback to Photon Fuzzy Search (biased towards selected city)
+	const cacheKey = `geoV3_${bias.lat.toFixed(2)}_${query.toLowerCase()}`;
 	const cached = localStorage.getItem(cacheKey);
 	if (cached) return JSON.parse(cached);
 
-	// Bias search towards Bengaluru, India (lat: 12.9716, lon: 77.5946)
-	const url = `${CONFIG.PHOTON_BASE_URL}/?q=${encodeURIComponent(query)}&limit=5&lat=12.9716&lon=77.5946`;
+	// Bias search towards the selected city
+	const url = `${CONFIG.PHOTON_BASE_URL}/?q=${encodeURIComponent(query)}&limit=5&lat=${bias.lat}&lon=${bias.lng}`;
 
 	try {
 		const response = await fetch(url);

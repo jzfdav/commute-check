@@ -11,6 +11,7 @@ import { useEffect, useState } from "preact/hooks";
 import { Toaster } from "sonner";
 import { LocationSearch } from "./components/LocationSearch";
 import { CommuteMap } from "./components/Map";
+import { CITIES, type City, DEFAULT_CITY } from "./constants/cities";
 import { useCommuteComparison } from "./hooks/useCommuteComparison";
 import { calculateMonthlySavings, getShortName } from "./utils/calculations";
 import "./app.css";
@@ -34,6 +35,7 @@ export function App() {
 	const [showDetails, setShowDetails] = useState(false);
 	const [isInputCollapsed, setIsInputCollapsed] = useState(false);
 	const [isResultsCollapsed, setIsResultsCollapsed] = useState(false);
+	const [selectedCity, setSelectedCity] = useState<City>(DEFAULT_CITY);
 
 	// Auto-collapse when both routes are loaded
 	useEffect(() => {
@@ -99,6 +101,18 @@ export function App() {
 						<h1 className="text-lg tracking-tight uppercase font-black">
 							Commute Check
 						</h1>
+					</div>
+					<div className="city-selector">
+						{CITIES.map((city) => (
+							<button
+								key={city.name}
+								type="button"
+								className={selectedCity.name === city.name ? "active" : ""}
+								onClick={() => setSelectedCity(city)}
+							>
+								{city.name}
+							</button>
+						))}
 					</div>
 				</header>
 
@@ -182,16 +196,19 @@ export function App() {
 												label="Starting Point"
 												value={originA}
 												onChange={setOriginA}
+												cityBias={selectedCity}
 											/>
 											<LocationSearch
 												label="Option A"
 												value={destA}
 												onChange={setDestA}
+												cityBias={selectedCity}
 											/>
 											<LocationSearch
 												label="Option B"
 												value={destB}
 												onChange={setDestB}
+												cityBias={selectedCity}
 											/>
 										</>
 									) : (
@@ -200,16 +217,19 @@ export function App() {
 												label="Option A"
 												value={originA}
 												onChange={setOriginA}
+												cityBias={selectedCity}
 											/>
 											<LocationSearch
 												label="Option B"
 												value={originB}
 												onChange={setOriginB}
+												cityBias={selectedCity}
 											/>
 											<LocationSearch
 												label="Destination"
 												value={destA}
 												onChange={setDestA}
+												cityBias={selectedCity}
 											/>
 										</>
 									)}

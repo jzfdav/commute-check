@@ -50,6 +50,7 @@
 	border-bottom: 1px solid var(--md-sys-color-surface-container-high);
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
 	height: 48px;
 }
 
@@ -58,6 +59,37 @@
 	display: flex;
 	align-items: center;
 	gap: 8px;
+}
+
+/* City Selector */
+.city-selector {
+	display: flex;
+	background: rgba(0, 0, 0, 0.2);
+	border-radius: 8px;
+	padding: 3px;
+	gap: 2px;
+}
+
+.city-selector button {
+	padding: 4px 12px;
+	background: transparent;
+	color: var(--text-dim);
+	font-size: 11px;
+	font-weight: 600;
+	text-transform: uppercase;
+	border-radius: 6px;
+	transition: all 0.2s;
+	border: none;
+	cursor: pointer;
+}
+
+.city-selector button.active {
+	background: var(--primary-color);
+	color: var(--md-sys-color-on-primary);
+}
+
+.city-selector button:hover:not(.active) {
+	background: rgba(255, 255, 255, 0.1);
 }
 
 /* MD3 Input */
