@@ -363,7 +363,7 @@ export function App() {
 							</h2>
 						</div>
 
-						<div className="flex flex-col gap-6">
+						<div className="flex flex-col gap-6 h-full">
 							<div className="details-grid">
 								<div className="route-details-card border-A">
 									<h3 className="route-name">
