@@ -105,10 +105,12 @@
 	align-items: center;
 	cursor: pointer;
 	border-radius: 12px;
+	color: var(--text-color);
+	text-align: left;
 }
 
 .input-panel.collapsed:hover {
-	background: rgba(40, 40, 40, 0.98);
+	background: rgba(45, 45, 45, 0.98);
 }
 
 .input-summary {
@@ -161,6 +163,9 @@
 	transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 	position: relative;
 	overflow: hidden;
+	color: var(--text-color);
+	text-align: left;
+	border: 1px solid transparent;
 }
 
 .verdict-card::before {
@@ -170,11 +175,9 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background: radial-gradient(
-		800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-		rgba(255, 255, 255, 0.06),
-		transparent 40%
-	);
+	background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+			rgba(255, 255, 255, 0.06),
+			transparent 40%);
 	z-index: 0;
 	pointer-events: none;
 	opacity: 0;
@@ -231,6 +234,11 @@
 	font-size: 0.85rem;
 	color: var(--text-dim);
 	margin-top: 4px;
+	opacity: 0.9;
+}
+
+.verdict-subtext strong {
+	color: white;
 }
 
 .comparison-footer {
@@ -241,6 +249,15 @@
 	border-top: 1px solid rgba(255, 255, 255, 0.08);
 	position: relative;
 	z-index: 1;
+}
+
+.footer-column h4 {
+	font-size: 0.8rem;
+	margin-bottom: 4px;
+	color: var(--text-color);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .stress-badge {
