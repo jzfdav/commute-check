@@ -180,7 +180,7 @@
 
 .input-summary.grid-layout {
 	display: grid;
-	grid-template-columns: 1fr 32px 1fr 32px;
+	grid-template-columns: min-content 32px 1fr 32px;
 	align-items: center;
 	text-align: left;
 }
@@ -226,12 +226,20 @@
 .origin-row {
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 1px;
 }
 
-.dest-row:last-child,
-.origin-row:last-child {
-	margin-bottom: 0;
+.vs-divider {
+	font-size: 8px;
+	text-transform: uppercase;
+	opacity: 0.25;
+	font-weight: 800;
+	letter-spacing: 2px;
+	margin: -4px 0;
+	line-height: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	white-space: nowrap;
 }
 
 .toggle-indicator {
