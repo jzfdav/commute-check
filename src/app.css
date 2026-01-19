@@ -231,15 +231,25 @@
 .vs-divider {
 	font-size: 8px;
 	text-transform: uppercase;
-	opacity: 0.25;
+	opacity: 0.3;
 	font-weight: 800;
-	letter-spacing: 2px;
-	margin: -4px 0;
+	letter-spacing: 1px;
+	margin: 2px 0;
 	line-height: 1;
 	display: flex;
-	justify-content: center;
 	align-items: center;
+	gap: 6px;
 	white-space: nowrap;
+	width: 100%;
+}
+
+.vs-divider::before,
+.vs-divider::after {
+	content: "";
+	flex: 1;
+	height: 1px;
+	background: currentColor;
+	opacity: 0.2;
 }
 
 .toggle-indicator {

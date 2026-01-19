@@ -149,7 +149,7 @@ export function App() {
 													{getShortName(destA.name)}
 												</span>
 											</div>
-											<div className="vs-divider">--vs--</div>
+											<div className="vs-divider">vs</div>
 											<div className="dest-row">
 												<span className="summary-value">
 													{getShortName(destB.name)}
@@ -165,7 +165,7 @@ export function App() {
 													{getShortName(originA.name)}
 												</span>
 											</div>
-											<div className="vs-divider">--vs--</div>
+											<div className="vs-divider">vs</div>
 											<div className="origin-row">
 												<span className="summary-value">
 													{getShortName(originB.name)}
