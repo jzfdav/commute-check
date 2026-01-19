@@ -1,36 +1,33 @@
 import { useEffect, useMemo, useState } from "preact/hooks";
 import { toast } from "sonner";
+import { CITY_DEFAULTS } from "../constants/cities";
 import { fetchRoute } from "../services/osrm";
 import { getTrafficHeuristic } from "../services/traffic";
 import type { ComparisonMode, Location, RouteData } from "../types";
 
 // Default mock locations (Bengaluru)
-const DEFAULT_ORIGIN: Location = {
-	name: "BEL Layout, Vidyaranyapura",
-	lat: 13.0819,
-	lng: 77.5534,
-};
-const DEFAULT_DEST_A: Location = {
-	name: "EGL (Embassy GolfLinks), Bengaluru",
-	lat: 12.9468,
-	lng: 77.648,
-};
-const DEFAULT_DEST_B: Location = {
-	name: "Bagmane Solarium, Bengaluru",
-	lat: 12.9936,
-	lng: 77.6965,
-};
+const DEFAULT_LOCS = CITY_DEFAULTS.Bengaluru;
 
 export function useCommuteComparison() {
 	const [mode, setMode] = useState<ComparisonMode>("destinations");
-	const [originA, setOriginA] = useState<Location>(DEFAULT_ORIGIN);
-	const [originB, setOriginB] = useState<Location>(DEFAULT_ORIGIN);
-	const [destA, setDestA] = useState<Location>(DEFAULT_DEST_A);
-	const [destB, setDestB] = useState<Location>(DEFAULT_DEST_B);
+	const [originA, setOriginA] = useState<Location>(DEFAULT_LOCS.origin);
+	const [originB, setOriginB] = useState<Location>(DEFAULT_LOCS.origin);
+	const [destA, setDestA] = useState<Location>(DEFAULT_LOCS.destA);
+	const [destB, setDestB] = useState<Location>(DEFAULT_LOCS.destB);
 
 	const [routeA, setRouteA] = useState<RouteData | null>(null);
 	const [routeB, setRouteB] = useState<RouteData | null>(null);
 	const [isLoading, setIsLoading] = useState(false);
+
+	const setCityDefaults = (cityName: string) => {
+		const defaults = CITY_DEFAULTS[cityName];
+		if (defaults) {
+			setOriginA(defaults.origin);
+			setOriginB(defaults.origin);
+			setDestA(defaults.destA);
+			setDestB(defaults.destB);
+		}
+	};
 
 	const trafficInfo = useMemo(() => getTrafficHeuristic(), []);
 
@@ -73,6 +70,7 @@ export function useCommuteComparison() {
 	return {
 		mode,
 		handleModeSwitch,
+		setCityDefaults,
 		originA,
 		setOriginA,
 		originB,

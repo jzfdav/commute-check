@@ -21,6 +21,7 @@ export function App() {
 	const {
 		mode,
 		handleModeSwitch,
+		setCityDefaults,
 		originA,
 		setOriginA,
 		originB,
@@ -110,7 +111,12 @@ export function App() {
 								key={city.name}
 								type="button"
 								className={selectedCity.name === city.name ? "active" : ""}
-								onClick={() => setSelectedCity(city)}
+								onClick={() => {
+									setSelectedCity(city);
+									setCityDefaults(city.name);
+									setIsInputCollapsed(false);
+									setIsResultsCollapsed(true);
+								}}
 							>
 								{city.name}
 							</button>

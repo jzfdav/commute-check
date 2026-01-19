@@ -71,4 +71,41 @@ export const TECH_PARKS: Location[] = [
 		lat: 12.9912,
 		lng: 77.659,
 	},
+	// Pune IBM Offices
+	{
+		name: "IBM Embassy Techzone (ETZ), Hinjewadi",
+		lat: 18.5913,
+		lng: 73.7191,
+	},
+	{
+		name: "IBM Panchshil Tech Park, Yerwada",
+		lat: 18.5516,
+		lng: 73.8935,
+	},
+	{
+		name: "IBM SP Infocity, Hadapsar",
+		lat: 18.47,
+		lng: 73.96,
+	},
+	// Popular Pune Residential Areas
+	{
+		name: "Baner, Pune",
+		lat: 18.559,
+		lng: 73.7797,
+	},
+	{
+		name: "Kothrud, Pune",
+		lat: 18.5074,
+		lng: 73.8077,
+	},
+	{
+		name: "Wakad, Pune",
+		lat: 18.598,
+		lng: 73.765,
+	},
+	{
+		name: "Viman Nagar, Pune",
+		lat: 18.5679,
+		lng: 73.9143,
+	},
 ];
