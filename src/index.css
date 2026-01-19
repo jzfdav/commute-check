@@ -1,14 +1,30 @@
 :root {
-	--bg-color: #121212;
-	--card-bg: #1e1e1e;
-	--text-color: #e0e0e0;
-	--text-dim: #b0b0b0;
-	--primary-color: #3f51b5;
-	--secondary-color: #9c27b0;
-	--success-green: #4caf50;
-	--warning-amber: #ffc107;
-	--error-red: #f44336;
-	--border-color: #333;
+	/* MD3 Dark Theme Palette */
+	--md-sys-color-primary: #d0bcff;
+	--md-sys-color-on-primary: #381e72;
+	--md-sys-color-primary-container: #4f378b;
+	--md-sys-color-on-primary-container: #eaddff;
+	--md-sys-color-secondary: #ccc2dc;
+	--md-sys-color-on-secondary: #332d41;
+	--md-sys-color-surface: #141218;
+	--md-sys-color-surface-container: #211f26;
+	--md-sys-color-surface-container-high: #2b2930;
+	--md-sys-color-on-surface: #e6e1e5;
+	--md-sys-color-on-surface-variant: #cac4d0;
+	--md-sys-color-outline: #938f99;
+
+	/* Functional Aliases */
+	--bg-color: var(--md-sys-color-surface);
+	--card-bg: var(--md-sys-color-surface-container);
+	--text-color: var(--md-sys-color-on-surface);
+	--text-dim: var(--md-sys-color-on-surface-variant);
+	--primary-color: var(--md-sys-color-primary);
+	--secondary-color: var(--md-sys-color-secondary);
+	--success-green: #b4f3b7;
+	/* MD3 equivalent green */
+	--warning-amber: #ffdea1;
+	--error-red: #f2b8b5;
+	--border-color: var(--md-sys-color-outline);
 }
 
 * {
@@ -63,9 +79,10 @@ input:focus {
 
 .card {
 	background: var(--card-bg);
-	border-radius: 8px;
-	padding: 16px;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+	border-radius: 28px;
+	padding: 24px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+	border: 1px solid transparent;
 }
 
 .flex {
@@ -185,11 +202,10 @@ input:focus {
 }
 
 /* Glassmorphism Refinement */
+/* MD3 Surface Replacement */
 .glass {
-	background: rgba(30, 30, 30, 0.7);
-	backdrop-filter: blur(12px) saturate(180%);
-	-webkit-backdrop-filter: blur(12px) saturate(180%);
-	border: 1px solid rgba(255, 255, 255, 0.1);
+	background: var(--md-sys-color-surface-container-high);
+	border: 1px solid transparent;
 }
 
 ::-webkit-scrollbar {

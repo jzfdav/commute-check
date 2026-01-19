@@ -1,15 +1,12 @@
 :root {
-	--bg-color: #121212;
-	--card-bg: rgba(30, 30, 30, 0.95);
-	--text-color: #e0e0e0;
-	--text-dim: #b0b0b0;
-	--primary-color: #3f51b5;
-	--secondary-color: #9c27b0;
-	--success-green: #4caf50;
-	--warning-amber: #ffc107;
-	--error-red: #f44336;
-	--border-color: #333;
-	--header-height: 52px;
+	--bg-color: var(--md-sys-color-surface);
+	--card-bg: var(--md-sys-color-surface-container);
+	--text-color: var(--md-sys-color-on-surface);
+	--text-dim: var(--md-sys-color-on-surface-variant);
+	--primary-color: var(--md-sys-color-primary);
+	--secondary-color: var(--md-sys-color-secondary);
+	--header-height: 64px;
+	/* Slightly taller for MD3 */
 }
 
 /* Base resets handled in index.css */
@@ -48,15 +45,13 @@
 /* Header */
 .app-header {
 	pointer-events: auto;
-	background: var(--card-bg);
-	backdrop-filter: blur(8px);
-	padding: 0 12px;
+	background: var(--bg-color);
+	padding: 0 16px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	border-bottom: 1px solid var(--border-color);
+	border-bottom: 1px solid var(--md-sys-color-surface-container-high);
 	height: var(--header-height);
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .brand {
@@ -77,17 +72,17 @@
 /* Input Panel (Desktop: Left Side) */
 .floating-panel {
 	pointer-events: auto;
-	background: var(--card-bg);
-	backdrop-filter: blur(8px);
-	border-radius: 12px;
-	padding: 16px;
+	background: var(--md-sys-color-surface-container-high);
+	border-radius: 28px;
+	/* MD3 card radius */
+	padding: 24px;
 	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-	border: 1px solid var(--border-color);
+	border: 1px solid transparent;
 	display: flex;
 	flex-direction: column;
 	max-height: 100%;
 	overflow-y: auto;
-	transition: transform 0.3s ease;
+	transition: all 0.4s cubic-bezier(0.2, 0, 0, 1.0);
 }
 
 .input-panel {
@@ -97,20 +92,24 @@
 }
 
 .input-panel.collapsed {
-	height: 44px;
+	height: 56px;
 	width: 350px;
 	overflow: hidden;
 	padding: 0 16px;
 	display: flex;
 	align-items: center;
 	cursor: pointer;
-	border-radius: 12px;
+	border-radius: 16px;
+	background: var(--md-sys-color-surface-container-high);
 	color: var(--text-color);
 	text-align: left;
+	border: none;
+	/* remove browser default */
 }
 
 .input-panel.collapsed:hover {
-	background: rgba(45, 45, 45, 0.98);
+	background: var(--md-sys-color-primary-container);
+	color: var(--md-sys-color-on-primary-container);
 }
 
 .input-summary {
@@ -152,20 +151,31 @@
 }
 
 .verdict-card {
-	background: var(--card-bg);
-	backdrop-filter: blur(16px) saturate(180%);
-	border-radius: 20px;
+	background: var(--md-sys-color-surface-container-high);
+	border-radius: 28px;
 	padding: 24px;
-	box-shadow:
-		0 12px 40px rgba(0, 0, 0, 0.4),
-		0 0 0 1px rgba(255, 255, 255, 0.05);
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
 	cursor: pointer;
-	transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+	transition: all 0.4s cubic-bezier(0.2, 0, 0, 1.0);
 	position: relative;
 	overflow: hidden;
 	color: var(--text-color);
 	text-align: left;
 	border: 1px solid transparent;
+}
+
+/* Drag Handle */
+.verdict-card::after {
+	content: "";
+	position: absolute;
+	top: 8px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 32px;
+	height: 4px;
+	background: var(--md-sys-color-outline);
+	border-radius: 2px;
+	opacity: 0.4;
 }
 
 .verdict-card::before {
@@ -370,30 +380,31 @@
 	}
 
 	.input-panel {
-		width: calc(100% - 24px);
-		margin: 0 12px 12px 12px;
-		max-height: 28vh;
-		background: rgba(30, 30, 30, 0.95);
-		backdrop-filter: blur(16px);
-		border-radius: 16px;
-		border: 1px solid var(--border-color);
+		width: 100%;
+		margin: 0;
+		max-height: 40vh;
+		background: var(--md-sys-color-surface-container-high);
+		border-radius: 28px 28px 0 0;
+		border: 1px solid var(--md-sys-color-surface-container-high);
 		box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
 		position: static;
 		pointer-events: auto;
+		padding: 24px 20px 12px 20px;
 	}
 
 	.input-panel.collapsed {
-		width: calc(100% - 24px);
-		height: 48px;
-		max-height: 48px;
-		border-radius: 12px;
+		width: 100%;
+		height: 64px;
+		max-height: 64px;
+		border-radius: 28px 28px 0 0;
+		margin-bottom: 0;
 	}
 
 	.results-container {
 		position: static;
 		transform: none;
-		width: calc(100% - 24px);
-		margin: 0 12px 12px 12px;
+		width: 100%;
+		margin: 0;
 		bottom: 0;
 		left: 0;
 		z-index: 101;
@@ -404,11 +415,12 @@
 	}
 
 	.verdict-card {
-		padding: 16px;
+		padding: 24px 20px;
+		border-radius: 28px 28px 0 0;
 	}
 
 	.verdict-title {
-		font-size: 1rem;
+		font-size: 1.1rem;
 	}
 
 	.app-header {

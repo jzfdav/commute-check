@@ -142,7 +142,10 @@ export function App() {
 							<button
 								type="button"
 								className="input-summary"
-								onClick={() => setIsInputCollapsed(false)}
+								onClick={() => {
+									setIsInputCollapsed(false);
+									setIsResultsCollapsed(true);
+								}}
 							>
 								<div className="flex items-center gap-3">
 									<MapPin size={16} color="var(--primary-color)" />
@@ -169,7 +172,10 @@ export function App() {
 										<button
 											type="button"
 											className="toggle-button"
-											onClick={() => setIsInputCollapsed(true)}
+											onClick={() => {
+												setIsInputCollapsed(true);
+												setIsResultsCollapsed(false); // Mutual exclusivity
+											}}
 										>
 											<ChevronUp size={18} />
 										</button>
@@ -242,12 +248,20 @@ export function App() {
 											className="toggle-button"
 											onClick={(e) => {
 												e.stopPropagation();
-												setIsResultsCollapsed(!isResultsCollapsed);
+												const newState = !isResultsCollapsed;
+												setIsResultsCollapsed(newState);
+												if (!newState) {
+													setIsInputCollapsed(true);
+												}
 											}}
 											onKeyDown={(e) => {
 												if (e.key === "Enter" || e.key === " ") {
 													e.stopPropagation();
-													setIsResultsCollapsed(!isResultsCollapsed);
+													const newState = !isResultsCollapsed;
+													setIsResultsCollapsed(newState);
+													if (!newState) {
+														setIsInputCollapsed(true);
+													}
 												}
 											}}
 											// biome-ignore lint/a11y/useSemanticElements: Nesting buttons causes issues, using role="button"
