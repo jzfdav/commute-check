@@ -374,7 +374,6 @@ export function App() {
 						<div className="flex flex-col gap-6">
 							<div className="details-grid">
 								<div className="route-details-card border-A">
-									<div className="route-badge">Option A</div>
 									<h3 className="route-name">
 										{getShortName(
 											mode === "destinations" ? destA.name : originA.name,
@@ -403,7 +402,6 @@ export function App() {
 								</div>
 
 								<div className="route-details-card border-B">
-									<div className="route-badge">Option B</div>
 									<h3 className="route-name">
 										{getShortName(
 											mode === "destinations" ? destB.name : originB.name,
