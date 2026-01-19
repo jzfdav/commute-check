@@ -103,44 +103,18 @@ export function App() {
 			{/* Layer 1: Floating UI */}
 			<div className="ui-layer">
 				<header className="app-header">
-					<div className="toggle-header">
-						<div className="brand">
-							<MapIcon
-								style={{
-									width: "20px",
-									height: "20px",
-									color: "var(--primary-color)",
-								}}
-							/>
-							<h1 className="text-lg tracking-tight uppercase font-black">
-								Commute Check
-							</h1>
-						</div>
-						<div className="tabs">
-							<button
-								type="button"
-								className={mode === "destinations" ? "active" : ""}
-								onClick={() => handleModeSwitch("destinations")}
-							>
-								Destinations
-							</button>
-							<button
-								type="button"
-								className={mode === "origins" ? "active" : ""}
-								onClick={() => handleModeSwitch("origins")}
-							>
-								Origins
-							</button>
-						</div>
+					<div className="brand">
+						<MapIcon
+							style={{
+								width: "20px",
+								height: "20px",
+								color: "var(--primary-color)",
+							}}
+						/>
+						<h1 className="text-lg tracking-tight uppercase font-black">
+							Commute Check
+						</h1>
 					</div>
-					<p
-						className="text-xs text-dim mb-4"
-						style={{ padding: "0 4px", opacity: 0.8 }}
-					>
-						{mode === "destinations"
-							? "Comparing 2 destinations from 1 starting point."
-							: "Comparing 2 starting points to 1 destination."}
-					</p>
 				</header>
 
 				<div className="panels-container">
@@ -171,25 +145,50 @@ export function App() {
 							</button>
 						) : (
 							<>
-								<div className="flex justify-between items-center mb-4">
-									<div className="flex items-center gap-2">
-										<MapPin size={18} color="var(--primary-color)" />
-										<h2 className="text-sm uppercase tracking-wider font-bold">
-											Locations
-										</h2>
+								<div className="flex flex-col mb-4">
+									<div className="flex justify-between items-center mb-1">
+										<div className="flex items-center gap-2">
+											<MapPin size={18} color="var(--primary-color)" />
+											<h2 className="text-sm uppercase tracking-wider font-bold">
+												Locations
+											</h2>
+										</div>
+										<div className="flex items-center gap-3">
+											<div className="tabs compact">
+												<button
+													type="button"
+													className={mode === "destinations" ? "active" : ""}
+													onClick={() => handleModeSwitch("destinations")}
+												>
+													Dest.
+												</button>
+												<button
+													type="button"
+													className={mode === "origins" ? "active" : ""}
+													onClick={() => handleModeSwitch("origins")}
+												>
+													Orig.
+												</button>
+											</div>
+											{routeA && routeB && (
+												<button
+													type="button"
+													className="toggle-button"
+													onClick={() => {
+														setIsInputCollapsed(true);
+														setIsResultsCollapsed(false);
+													}}
+												>
+													<ChevronUp size={18} />
+												</button>
+											)}
+										</div>
 									</div>
-									{routeA && routeB && (
-										<button
-											type="button"
-											className="toggle-button"
-											onClick={() => {
-												setIsInputCollapsed(true);
-												setIsResultsCollapsed(false); // Mutual exclusivity
-											}}
-										>
-											<ChevronUp size={18} />
-										</button>
-									)}
+									<p className="text-[10px] text-dim opacity-70 px-1">
+										{mode === "destinations"
+											? "2 destinations · 1 starting point"
+											: "2 starting points · 1 destination"}
+									</p>
 								</div>
 								<div className="flex flex-col gap-4">
 									{mode === "destinations" ? (
@@ -239,11 +238,18 @@ export function App() {
 						<div
 							className={`results-container ${isResultsCollapsed ? "collapsed" : ""}`}
 						>
-							<button
-								type="button"
+							{/* biome-ignore lint/a11y/useSemanticElements: Using div for mouse-move tracking visual effects */}
+							<div
 								className="verdict-card animate-in text-left w-full"
 								onClick={() => setShowDetails(true)}
 								onMouseMove={handleMouseMove}
+								onKeyDown={(e) => {
+									if (e.key === "Enter" || e.key === " ") {
+										setShowDetails(true);
+									}
+								}}
+								role="button"
+								tabIndex={0}
 							>
 								<div className="verdict-header">
 									<div className="flex justify-between items-start">
@@ -254,7 +260,8 @@ export function App() {
 											</span>
 											<span> is faster</span>
 										</h3>
-										<div
+										<button
+											type="button"
 											className="toggle-button"
 											onClick={(e) => {
 												e.stopPropagation();
@@ -264,26 +271,13 @@ export function App() {
 													setIsInputCollapsed(true);
 												}
 											}}
-											onKeyDown={(e) => {
-												if (e.key === "Enter" || e.key === " ") {
-													e.stopPropagation();
-													const newState = !isResultsCollapsed;
-													setIsResultsCollapsed(newState);
-													if (!newState) {
-														setIsInputCollapsed(true);
-													}
-												}
-											}}
-											// biome-ignore lint/a11y/useSemanticElements: Nesting buttons causes issues, using role="button"
-											role="button"
-											tabIndex={0}
 										>
 											{isResultsCollapsed ? (
 												<ChevronUp size={18} />
 											) : (
 												<ChevronDown size={18} />
 											)}
-										</div>
+										</button>
 									</div>
 									{!isResultsCollapsed && (
 										<p className="verdict-subtext">
@@ -340,7 +334,7 @@ export function App() {
 										</div>
 									</div>
 								)}
-							</button>
+							</div>
 						</div>
 					)}
 				</div>
