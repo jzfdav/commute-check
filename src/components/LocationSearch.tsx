@@ -76,6 +76,7 @@ export function LocationSearch({
 				<input
 					id={`search-${label}`}
 					type="text"
+					className="md-input"
 					value={query}
 					onInput={(e) => setQuery((e.target as HTMLInputElement).value)}
 					placeholder={placeholder}

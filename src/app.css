@@ -5,8 +5,8 @@
 	--text-dim: var(--md-sys-color-on-surface-variant);
 	--primary-color: var(--md-sys-color-primary);
 	--secondary-color: var(--md-sys-color-secondary);
-	--header-height: 64px;
-	/* Slightly taller for MD3 */
+	--header-height: 80px;
+	/* Slightly taller for sub-label */
 }
 
 /* Base resets handled in index.css */
@@ -58,6 +58,21 @@
 	justify-content: space-between;
 	align-items: center;
 	width: 100%;
+}
+
+/* MD3 Input */
+.md-input {
+	background: var(--md-sys-color-surface-container) !important;
+	border: 1px solid var(--md-sys-color-outline-variant) !important;
+	color: var(--text-color) !important;
+	border-radius: 8px !important;
+	transition: all 0.2s ease;
+}
+
+.md-input:focus {
+	border-color: var(--primary-color) !important;
+	background: var(--md-sys-color-surface-container-high) !important;
+	outline: none;
 }
 
 .brand {
@@ -491,31 +506,31 @@
 	}
 
 	.input-panel {
-		width: 100%;
-		margin: 0;
-		max-height: 40vh;
+		width: calc(100% - 24px);
+		margin: 0 12px 0 12px;
+		max-height: 45vh;
 		background: var(--md-sys-color-surface-container-high);
-		border-radius: 28px 28px 0 0;
-		border: 1px solid var(--md-sys-color-surface-container-high);
-		box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4);
+		border-radius: 28px;
+		border: 1px solid rgba(255, 255, 255, 0.05);
+		box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 		position: static;
 		pointer-events: auto;
-		padding: 24px 20px 12px 20px;
+		padding: 24px 20px 16px 20px;
 	}
 
 	.input-panel.collapsed {
-		width: 100%;
+		width: calc(100% - 24px);
 		height: 64px;
 		max-height: 64px;
-		border-radius: 28px 28px 0 0;
-		margin-bottom: 0;
+		border-radius: 28px;
+		margin: 0 12px;
 	}
 
 	.results-container {
 		position: static;
 		transform: none;
-		width: 100%;
-		margin: 0;
+		width: calc(100% - 24px);
+		margin: 8px 12px 12px 12px;
 		bottom: 0;
 		left: 0;
 		z-index: 101;
@@ -527,7 +542,8 @@
 
 	.verdict-card {
 		padding: 24px 20px;
-		border-radius: 28px 28px 0 0;
+		border-radius: 28px;
+		border: 1px solid rgba(255, 255, 255, 0.05);
 	}
 
 	.verdict-title {
