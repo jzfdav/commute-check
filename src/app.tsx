@@ -32,8 +32,8 @@ export function App() {
 	} = useCommuteComparison();
 
 	const [showDetails, setShowDetails] = useState(false);
-	const [isInputCollapsed, setIsInputCollapsed] = useState(false);
-	const [isResultsCollapsed, setIsResultsCollapsed] = useState(false);
+	const [isInputCollapsed, setIsInputCollapsed] = useState(true);
+	const [isResultsCollapsed, setIsResultsCollapsed] = useState(true);
 	const [selectedCity, setSelectedCity] = useState<City>(DEFAULT_CITY);
 
 	// Auto-collapse when both routes are loaded
