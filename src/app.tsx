@@ -1,6 +1,7 @@
 import {
 	ChevronDown,
 	ChevronUp,
+	Clock,
 	Map as MapIcon,
 	MapPin,
 	Timer,
@@ -29,6 +30,7 @@ export function App() {
 		setDestB,
 		routeA,
 		routeB,
+		trafficInfo,
 	} = useCommuteComparison();
 
 	const [showDetails, setShowDetails] = useState(false);
@@ -358,10 +360,16 @@ export function App() {
 						aria-modal="true"
 					>
 						<div className="flex flex-col justify-between h-full">
-							<div>
+							<div className="flex items-center justify-between">
 								<h2 className="text-lg font-black uppercase">
 									Comparison Details
 								</h2>
+								<div
+									className={`traffic-badge ${trafficInfo.isPeak ? "peak" : ""}`}
+								>
+									<Clock size={14} />
+									<span>{trafficInfo.label}</span>
+								</div>
 							</div>
 							<div className="route-details-card border-A">
 								<h3 className="route-name">

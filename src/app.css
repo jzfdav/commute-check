@@ -604,3 +604,29 @@
 		font-size: 1rem;
 	}
 }
+
+.traffic-badge {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	padding: 4px 10px;
+	background: var(--md-sys-color-surface-container-high);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 100px;
+	font-size: 0.75rem;
+	font-weight: 600;
+	color: var(--text-color);
+	opacity: 0.8;
+}
+
+.traffic-badge.peak {
+	background: rgba(255, 107, 107, 0.1);
+	border-color: rgba(255, 107, 107, 0.3);
+	color: #ff6b6b;
+	opacity: 1;
+}
+
+.traffic-badge span {
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+}

@@ -1,23 +1,17 @@
 import { CONFIG } from "../config";
 import type { RouteData } from "../types";
+import { getTrafficHeuristic } from "./traffic";
 
 /**
  * Fetches driving route data between two coordinates using the OSRM API.
- *
- * @param {[number, number]} start - The starting [latitude, longitude].
- * @param {[number, number]} end - The ending [latitude, longitude].
- * @returns {Promise<RouteData>} A promise that resolves to the route data (distance, duration, geometry).
- * @throws {Error} If the API request fails or no route is found.
- *
- * @example
- * const route = await fetchRoute([12.91, 77.64], [12.95, 77.65]);
- * console.log(route.duration); // seconds
+ * Applies a traffic heuristic based on the current time.
  */
 export async function fetchRoute(
 	start: [number, number],
 	end: [number, number],
 ): Promise<RouteData> {
-	const cacheKey = `route_${start.join(",")}_${end.join(",")}`;
+	const traffic = getTrafficHeuristic();
+	const cacheKey = `route_${start.join(",")}_${end.join(",")}_traffic_${traffic.multiplier.toFixed(2)}`;
 	const cached = localStorage.getItem(cacheKey);
 
 	if (cached) {
@@ -43,9 +37,13 @@ export async function fetchRoute(
 		}
 
 		const route = data.routes[0];
+
+		// Apply traffic multiplier to duration
+		const adjustedDuration = route.duration * traffic.multiplier;
+
 		const result: RouteData = {
 			distance: route.distance,
-			duration: route.duration,
+			duration: adjustedDuration,
 			geometry: route.geometry,
 		};
 

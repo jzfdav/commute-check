@@ -1,6 +1,7 @@
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useMemo, useState } from "preact/hooks";
 import { toast } from "sonner";
 import { fetchRoute } from "../services/osrm";
+import { getTrafficHeuristic } from "../services/traffic";
 import type { ComparisonMode, Location, RouteData } from "../types";
 
 // Default mock locations (Bengaluru)
@@ -30,6 +31,8 @@ export function useCommuteComparison() {
 	const [routeA, setRouteA] = useState<RouteData | null>(null);
 	const [routeB, setRouteB] = useState<RouteData | null>(null);
 	const [isLoading, setIsLoading] = useState(false);
+
+	const trafficInfo = useMemo(() => getTrafficHeuristic(), []);
 
 	useEffect(() => {
 		updateRoutes();
@@ -81,5 +84,6 @@ export function useCommuteComparison() {
 		routeA,
 		routeB,
 		isLoading,
+		trafficInfo,
 	};
 }
