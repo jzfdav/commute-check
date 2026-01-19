@@ -5,9 +5,9 @@ import type { ComparisonMode, Location, RouteData } from "../types";
 
 // Default mock locations (Bengaluru)
 const DEFAULT_ORIGIN: Location = {
-	name: "HSR Layout, Bengaluru",
-	lat: 12.9121,
-	lng: 77.6446,
+	name: "BEL Layout, Vidyaranyapura",
+	lat: 13.0819,
+	lng: 77.5534,
 };
 const DEFAULT_DEST_A: Location = {
 	name: "EGL (Embassy GolfLinks), Bengaluru",
@@ -15,9 +15,9 @@ const DEFAULT_DEST_A: Location = {
 	lng: 77.648,
 };
 const DEFAULT_DEST_B: Location = {
-	name: "Manyata Tech Park, Bengaluru",
-	lat: 13.0451,
-	lng: 77.6266,
+	name: "Bagmane Solarium, Bengaluru",
+	lat: 12.9936,
+	lng: 77.6965,
 };
 
 export function useCommuteComparison() {
