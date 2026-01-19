@@ -389,6 +389,7 @@
 @media (max-width: 640px) {
 	.details-grid {
 		grid-template-columns: 1fr;
+		gap: 12px;
 	}
 }
 
