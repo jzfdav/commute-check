@@ -363,59 +363,57 @@ export function App() {
 									Comparison Details
 								</h2>
 							</div>
-							<div className="details-grid">
-								<div className="route-details-card border-A">
-									<h3 className="route-name">
-										{getShortName(
-											mode === "destinations" ? destA.name : originA.name,
-										)}
-									</h3>
-									<div className="metrics-list">
-										<div className="detail-metric">
-											<Timer size={16} />
-											<div className="metric-info">
-												<span className="label">Travel Time</span>
-												<span className="value">
-													{Math.round(routeA.duration / 60)} mins
-												</span>
-											</div>
+							<div className="route-details-card border-A">
+								<h3 className="route-name">
+									{getShortName(
+										mode === "destinations" ? destA.name : originA.name,
+									)}
+								</h3>
+								<div className="metrics-list">
+									<div className="detail-metric">
+										<Timer size={16} />
+										<div className="metric-info">
+											<span className="label">Travel Time</span>
+											<span className="value">
+												{Math.round(routeA.duration / 60)} mins
+											</span>
 										</div>
-										<div className="detail-metric">
-											<MapPin size={16} />
-											<div className="metric-info">
-												<span className="label">Distance</span>
-												<span className="value">
-													{(routeA.distance / 1000).toFixed(1)} km
-												</span>
-											</div>
+									</div>
+									<div className="detail-metric">
+										<MapPin size={16} />
+										<div className="metric-info">
+											<span className="label">Distance</span>
+											<span className="value">
+												{(routeA.distance / 1000).toFixed(1)} km
+											</span>
 										</div>
 									</div>
 								</div>
+							</div>
 
-								<div className="route-details-card border-B">
-									<h3 className="route-name">
-										{getShortName(
-											mode === "destinations" ? destB.name : originB.name,
-										)}
-									</h3>
-									<div className="metrics-list">
-										<div className="detail-metric">
-											<Timer size={16} />
-											<div className="metric-info">
-												<span className="label">Travel Time</span>
-												<span className="value">
-													{Math.round(routeB.duration / 60)} mins
-												</span>
-											</div>
+							<div className="route-details-card border-B">
+								<h3 className="route-name">
+									{getShortName(
+										mode === "destinations" ? destB.name : originB.name,
+									)}
+								</h3>
+								<div className="metrics-list">
+									<div className="detail-metric">
+										<Timer size={16} />
+										<div className="metric-info">
+											<span className="label">Travel Time</span>
+											<span className="value">
+												{Math.round(routeB.duration / 60)} mins
+											</span>
 										</div>
-										<div className="detail-metric">
-											<MapPin size={16} />
-											<div className="metric-info">
-												<span className="label">Distance</span>
-												<span className="value">
-													{(routeB.distance / 1000).toFixed(1)} km
-												</span>
-											</div>
+									</div>
+									<div className="detail-metric">
+										<MapPin size={16} />
+										<div className="metric-info">
+											<span className="label">Distance</span>
+											<span className="value">
+												{(routeB.distance / 1000).toFixed(1)} km
+											</span>
 										</div>
 									</div>
 								</div>

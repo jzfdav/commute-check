@@ -380,19 +380,6 @@
 	flex-direction: column;
 }
 
-.details-grid {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 20px;
-}
-
-@media (max-width: 640px) {
-	.details-grid {
-		grid-template-columns: 1fr;
-		gap: 12px;
-	}
-}
-
 .route-details-card {
 	background: var(--md-sys-color-surface-container-high);
 	border-radius: 20px;
