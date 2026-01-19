@@ -1,5 +1,4 @@
 import {
-	Activity,
 	ChevronDown,
 	ChevronUp,
 	Map as MapIcon,
@@ -13,12 +12,7 @@ import { Toaster } from "sonner";
 import { LocationSearch } from "./components/LocationSearch";
 import { CommuteMap } from "./components/Map";
 import { useCommuteComparison } from "./hooks/useCommuteComparison";
-import type { RouteData } from "./types";
-import {
-	calculateMonthlySavings,
-	getShortName,
-	getTrafficStress,
-} from "./utils/calculations";
+import { calculateMonthlySavings, getShortName } from "./utils/calculations";
 import "./app.css";
 
 export function App() {
@@ -72,15 +66,6 @@ export function App() {
 		const y = e.clientY - rect.top;
 		card.style.setProperty("--mouse-x", `${x}px`);
 		card.style.setProperty("--mouse-y", `${y}px`);
-	};
-
-	const StressBadge = ({ route }: { route: RouteData }) => {
-		const stress = getTrafficStress(route);
-		return (
-			<span className={`stress-badge stress-${stress.label.toLowerCase()}`}>
-				{stress.label}
-			</span>
-		);
 	};
 
 	return (
@@ -306,7 +291,6 @@ export function App() {
 												<span className="text-xs font-bold">
 													{Math.round(routeA.duration / 60)}m
 												</span>
-												<StressBadge route={routeA} />
 											</div>
 										</div>
 										<div
@@ -329,7 +313,6 @@ export function App() {
 												<span className="text-xs font-bold">
 													{Math.round(routeB.duration / 60)}m
 												</span>
-												<StressBadge route={routeB} />
 											</div>
 										</div>
 									</div>
@@ -396,18 +379,6 @@ export function App() {
 												</span>
 											</div>
 										</div>
-										<div className="detail-metric">
-											<Activity size={16} />
-											<div className="metric-info">
-												<span className="label">Stress Level</span>
-												<div className="flex items-center gap-2">
-													<span className="value uppercase">
-														{getTrafficStress(routeA).label}
-													</span>
-													<StressBadge route={routeA} />
-												</div>
-											</div>
-										</div>
 									</div>
 								</div>
 
@@ -435,18 +406,6 @@ export function App() {
 												<span className="value">
 													{(routeB.distance / 1000).toFixed(1)} km
 												</span>
-											</div>
-										</div>
-										<div className="detail-metric">
-											<Activity size={16} />
-											<div className="metric-info">
-												<span className="label">Stress Level</span>
-												<div className="flex items-center gap-2">
-													<span className="value uppercase">
-														{getTrafficStress(routeB).label}
-													</span>
-													<StressBadge route={routeB} />
-												</div>
 											</div>
 										</div>
 									</div>

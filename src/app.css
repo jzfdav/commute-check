@@ -301,30 +301,6 @@
 	white-space: nowrap;
 }
 
-.stress-badge {
-	padding: 2px 6px;
-	border-radius: 4px;
-	font-size: 9px;
-	text-transform: uppercase;
-	font-weight: 800;
-	letter-spacing: 0.05em;
-}
-
-.stress-high {
-	background: rgba(244, 67, 54, 0.15);
-	color: #ff8a80;
-}
-
-.stress-moderate {
-	background: rgba(255, 193, 7, 0.15);
-	color: #ffd180;
-}
-
-.stress-low {
-	background: rgba(76, 175, 80, 0.15);
-	color: #b9f6ca;
-}
-
 /* Animations */
 @keyframes slideUp {
 	from {

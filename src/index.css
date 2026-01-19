@@ -201,36 +201,6 @@ input:focus {
 	color: white;
 }
 
-/* Stress Score Badges */
-.stress-badge {
-	padding: 2px 8px;
-	border-radius: 12px;
-	font-size: 10px;
-	font-weight: 800;
-	text-transform: uppercase;
-	display: inline-flex;
-	align-items: center;
-	gap: 4px;
-}
-
-.stress-high {
-	background: rgba(244, 67, 54, 0.2);
-	color: #ff5252;
-	border: 1px solid rgba(244, 67, 54, 0.3);
-}
-
-.stress-moderate {
-	background: rgba(255, 193, 7, 0.2);
-	color: #ffd740;
-	border: 1px solid rgba(255, 193, 7, 0.3);
-}
-
-.stress-low {
-	background: rgba(76, 175, 80, 0.2);
-	color: #69f0ae;
-	border: 1px solid rgba(76, 175, 80, 0.3);
-}
-
 /* Glassmorphism Refinement */
 /* MD3 Surface Replacement */
 .glass {
@@ -254,6 +224,7 @@ input:focus {
 ::-webkit-scrollbar-thumb:hover {
 	background: #444;
 }
+
 /* Material Design 3 Input Styles */
 input.md-input {
 	background: transparent !important;
