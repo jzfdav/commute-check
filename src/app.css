@@ -491,7 +491,6 @@
 .close-modal-btn {
 	width: 100%;
 	padding: 12px;
-	margin-top: auto;
 	background: var(--md-sys-color-surface-container-high);
 	color: var(--text-color);
 	font-weight: 600;

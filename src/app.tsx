@@ -357,13 +357,12 @@ export function App() {
 						role="dialog"
 						aria-modal="true"
 					>
-						<div className="mb-4">
-							<h2 className="text-lg font-black uppercase">
-								Comparison Details
-							</h2>
-						</div>
-
-						<div className="flex flex-col justify-between h-full">
+						<div className="flex flex-col justify-evenly h-full">
+							<div className="mb-2">
+								<h2 className="text-lg font-black uppercase">
+									Comparison Details
+								</h2>
+							</div>
 							<div className="details-grid">
 								<div className="route-details-card border-A">
 									<h3 className="route-name">
