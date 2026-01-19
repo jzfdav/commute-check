@@ -393,8 +393,8 @@
 
 .route-details-card {
 	background: var(--md-sys-color-surface-container-high);
-	border-radius: 24px;
-	padding: 24px;
+	border-radius: 20px;
+	padding: 16px;
 	position: relative;
 	border: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -413,22 +413,23 @@
 }
 
 .route-name {
-	font-size: 1.1rem;
+	font-size: 1rem;
 	font-weight: 800;
-	margin-bottom: 20px;
+	margin-bottom: 12px;
 	padding-right: 40px;
 }
 
 .metrics-list {
 	display: flex;
-	flex-direction: column;
-	gap: 16px;
+	flex-direction: row;
+	gap: 24px;
+	flex-wrap: wrap;
 }
 
 .detail-metric {
 	display: flex;
 	align-items: center;
-	gap: 12px;
+	gap: 8px;
 }
 
 .detail-metric svg {
@@ -442,14 +443,14 @@
 }
 
 .metric-info .label {
-	font-size: 10px;
+	font-size: 9px;
 	text-transform: uppercase;
 	letter-spacing: 0.5px;
 	color: var(--text-dim);
 }
 
 .metric-info .value {
-	font-size: 1rem;
+	font-size: 0.9rem;
 	font-weight: 600;
 	color: var(--text-color);
 }
