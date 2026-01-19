@@ -47,12 +47,13 @@ export async function searchLocation(query: string): Promise<Location[]> {
 		}
 	}
 
-	// 3. Fallback to Photon Fuzzy Search
+	// 3. Fallback to Photon Fuzzy Search (biased towards Bengaluru)
 	const cacheKey = `geoV2_${query.toLowerCase()}`;
 	const cached = localStorage.getItem(cacheKey);
 	if (cached) return JSON.parse(cached);
 
-	const url = `${CONFIG.PHOTON_BASE_URL}/?q=${encodeURIComponent(query)}&limit=5`;
+	// Bias search towards Bengaluru, India (lat: 12.9716, lon: 77.5946)
+	const url = `${CONFIG.PHOTON_BASE_URL}/?q=${encodeURIComponent(query)}&limit=5&lat=12.9716&lon=77.5946`;
 
 	try {
 		const response = await fetch(url);
