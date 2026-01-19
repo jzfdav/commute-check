@@ -4,11 +4,12 @@
 
 ## Features
 *   **Compare Two Scenarios:** Toggle between comparing destinations or origins.
-*   **The "Verdict" Engine:** Instantly see hours saved per month.
-*   **Traffic Stress Score:** Identify stressful routes.
+*   **🚀 Smart Search**: Advanced geocoding supporting **Photon** (fuzzy), **Google Plus Codes**, and a local **Bangalore Tech Park Catalog**.
+*   **The "Verdict" Engine:** Instantly see hours saved per month in a consolidated card.
+*   **Traffic Stress Score:** Identify stressful routes with color-coded badges.
+*   **📱 Mobile Ergonomics**: Optimized bottom-pinned, collapsible panels for one-handed map navigation.
 *   **Visual Map Comparison:** Dual-route visualization (Blue vs. Purple).
 *   **Offline Ready:** Installable on iOS/Android. Works without internet.
-*   **Performance First:** Built with Preact for instant load times and minimal data usage.
 
 ## Tech Stack
 *   **Core:** Preact, Vite, TypeScript
@@ -20,7 +21,7 @@
 
 ### Prerequisites
 *   Node.js (v18 or higher)
-*   npm or yarn
+*   pnpm (v8 or higher)
 
 ### Local Setup
 1.  Clone the repository:
@@ -30,11 +31,11 @@
     ```
 2.  Install dependencies:
     ```bash
-    npm install
+    pnpm install
     ```
 3.  Start the development server:
     ```bash
-    npm run dev
+    pnpm run dev
     ```
 4.  Open your browser at `http://localhost:5173`.
 

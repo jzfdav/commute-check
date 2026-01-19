@@ -2,37 +2,29 @@
 
 ## Agent Information
 *   **Role:** Implementation Agent
-*   **Current State:** Project initialization and planning phase complete. Documentation updated for Preact migration.
-*   **Context:** User requested high-performance PWA. We have switched from React to Preact to optimize bundle size and load time.
+*   **Current State:** V1 Core Architecture Complete. All planned UI/UX improvements and advanced search features implemented and deployed.
+*   **Context:** The app is a high-performance Preact PWA. It now features an "Executive Summary" UI and a multi-layered geocoding strategy (Photon, Plus Codes, Tech Parks).
 
-## Task Overview
-The goal is to build "Commute Check", a Preact-based PWA that helps users compare two commute options.
-*   **Input:** Two locations (Origin A/B or Destination A/B).
-*   **Output:** Comparison of time, distance, stress score, and monthly time savings.
+## Accomplishments
+1.  **UI Redesign:** Implemented a full-screen map with bottom-pinned, collapsible panels for one-handed ergonomics.
+2.  **Smart Search:** Integrated Photon (fuzzy search) and Google Plus Codes (local decoding) for precise location entry without API costs.
+3.  **Local Context:** Added a hardcoded `TECH_PARKS` catalog for instant matching of major Bangalore business hubs.
+4.  **Verdict Card:** Created a consolidated results card with "Hours Saved" and a detailed comparison modal.
+5.  **Performance:** Maintained zero-cost API usage and fast load times with Preact.
 
 ## Key Decisions & Constraints
-1.  **Stack:** Preact + Vite + TypeScript.
-    *   *Crucial:* Use `preact/compat` aliasing in `vite.config.ts` to support `react-leaflet`.
-2.  **Maps:** React Leaflet (running on Preact) + OpenStreetMap tiles.
-3.  **Routing:** OSRM Public API (Free).
-    *   *Constraint:* Handle API failures gracefully; aggressive caching.
-4.  **Styling:** CSS Modules. Dark Mode default.
-5.  **PWA:** `vite-plugin-pwa` for offline capabilities.
-6.  **Mock Data:** Default to Bengaluru (HSR Layout vs EGL/Manyata).
+1.  **Stack:** Preact + Vite + TypeScript. Using `pnpm`.
+2.  **Geocoding:** Photon for fuzzy, `open-location-code` for Plus Codes. assumed context is "Bangalore" for short codes.
+3.  **Deployment:** GitHub Pages via GitHub Actions.
+4.  **Lints:** Some minor Biome a11y lints are ignored intentionally to support nested interactive elements (collapsible verdict card inside a details button).
 
-## Next Steps (For the Next Agent)
-1.  **Scaffold Project:** Initialize the Vite project using the Preact preset: `npm init vite@latest commute-check -- --template preact-ts`.
-2.  **Install Dependencies:** `react-leaflet`, `leaflet`, `vite-plugin-pwa`.
-    *   *Note:* Ensure `preact` and `preact-render-to-string` are set up correctly.
-3.  **Configure Aliases:** Update `vite.config.ts` to alias `react` -> `preact/compat` and `react-dom` -> `preact/compat`.
-4.  **Implement UI Shell:** Create the layout with Tabs and Split View.
-5.  **Integrate Map:** Set up Leaflet map.
-6.  **Connect API:** Implement OSRM fetch with caching.
-
-## Open Questions / Ambiguities
-*   **Geocoding:** Need a strategy for searching addresses (Nominatim API recommended with debouncing).
+## Next Steps (For the Next Session)
+1.  **Shareable Comparisons:** Implement URL state persistence (e.g., `?originA=...&destA=...`) so users can share specific comparisons via a link.
+2.  **Multi-modal Routing:** Explore adding "Transit" or "Cycling" modes. Note: OSRM public instance is driving-only; may need a different engine like Valhalla or Pelias for transit.
+3.  **Refine Geocoding Recovery:** Currently assuming Bangalore context for short Plus Codes. Make this dynamic based on GPS or the first valid location entered.
+4.  **Animations:** Add smooth transitions for the bottom panel collapse/expand (currently instant via CSS).
 
 ## User Preferences
-*   **Performance:** Preact chosen for smaller footprint.
-*   **FOSS Only:** No paid APIs.
-*   **Offline First:** PWA functionality is paramount.
+*   **Speed:** Keep the bundle small.
+*   **Ergonomics:** Prioritize mobile one-handed ease of use.
+*   **FOSS:** No paid APIs (Google Maps, etc.) - keep it free.

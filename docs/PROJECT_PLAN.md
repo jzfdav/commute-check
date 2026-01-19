@@ -8,34 +8,36 @@ Commute Check is a Progressive Web App (PWA) designed to help users make informe
     *   **Compare Destinations:** One starting point (e.g., Home) -> Two different destinations (e.g., Job Offer A vs. Job Offer B).
     *   **Compare Origins:** Two different starting points (e.g., Apartment A vs. Apartment B) -> One destination (e.g., Current Office).
 2.  **Interactive Split-Map:**
-    *   Unified map view displaying both routes simultaneously using distinct colors (e.g., Blue for Option A, Purple for Option B).
-3.  **Smart Metrics:**
-    *   **ETA & Distance:** Real-time estimates for both options.
-    *   **Traffic Stress Score:** A calculated metric derived from the ratio of travel time to distance (identifying congestion).
-    *   **The Verdict:** A summary widget calculating "Hours Saved Per Month" (based on standard 22 workdays/month, round trip).
-4.  **Offline Capability:**
-    *   Full PWA installability (manifest.json).
-    *   Offline access to the app shell.
-    *   Caching of recent route comparisons for review without an internet connection.
-5.  **Responsive Design:**
-    *   Mobile-first UI that adapts to desktop split-views.
-    *   Dark mode theme with high-contrast status colors (Green for "Better", Amber for "Worse").
+    *   Unified map view displaying both routes simultaneously using distinct colors (Blue for Option A, Purple for Option B).
+3.  **Smart Metrics & "The Verdict":**
+    *   **The Verdict:** A consolidated executive summary card calculating "Hours Saved Per Month".
+    *   **Comparison Details:** Side-by-side modal for deep dives into duration, distance, and stress.
+    *   **Traffic Stress Score:** Derived from travel time to distance ratio (identifying congestion).
+4.  **Smart Geocoding Strategy:**
+    *   **Photon API:** High-quality fuzzy search for landmarks and addresses.
+    *   **Google Plus Codes:** Local decoding for precision without API costs.
+    *   **Tech Park Catalog:** Hardcoded catalog for instant Bangalore business park matching.
+5.  **Offline Capability:**
+    *   Full PWA installability.
+    *   Aggressive local caching of geocoding and routing results.
+6.  **Responsive Design:**
+    *   Mobile-first UI with bottom-pinned, collapsible panels for one-handed map interactivity.
 
 ## Tech Stack
-*   **Frontend Framework:** Preact (v10+) with Vite.
-    *   *Rationale:* Significantly smaller bundle size (3kB vs 40kB+) and faster parsing/execution, ideal for mobile PWAs.
-    *   *Compatibility:* Will use `preact/compat` to ensure compatibility with the React ecosystem (specifically `react-leaflet`).
+*   **Core:** Preact (v10+) with Vite.
+*   **Package Manager:** pnpm.
 *   **Language:** TypeScript.
-*   **Styling:** CSS Modules or Tailwind CSS (Minimal dependencies preferred). *Decision: Standard CSS/Modules for simplicity.*
-*   **Map Integration:** Leaflet (via `react-leaflet`) for rendering maps.
+*   **Styling:** Vanilla CSS. Dark Mode default.
+*   **Map Integration:** Leaflet (via `react-leaflet`).
 *   **Routing API:** Open Source Routing Machine (OSRM) public API.
-*   **PWA & Offline:** `vite-plugin-pwa` (powered by Workbox).
-*   **Deployment:** GitHub Pages via GitHub Actions.
+*   **Geocoding:** Photon API + `open-location-code`.
+*   **PWA & Offline:** `vite-plugin-pwa` (Workbox).
+*   **Deployment:** GitHub Pages (GitHub Actions).
 
 ## Map API Strategy (Free & Open Source)
 *   **Tiles:** OpenStreetMap (OSM) standard tiles.
 *   **Routing:** OSRM (Open Source Routing Machine) Public API.
-    *   *Note:* Strictly free APIs often have rate limits. We will implement aggressive local caching.
+*   **Geocoding:** Photon API (OpenStreetMap-based fuzzy search), Google Plus Codes (Local decoding), and custom Tech Park catalog.
 
 ## Offline Strategy
 *   **App Shell:** Cache `index.html`, JS bundles, and CSS via Service Worker.

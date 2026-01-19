@@ -9,24 +9,26 @@ Based on visual inspection and screenshot analysis, several areas for improvemen
 *   **Map Visibility:** The map is cramped and feels secondary to the inputs.
 *   **Ergonomics:** Top-right controls are hard to reach on tall screens.
 
-## 2. Optimization Plan
+## 2. Optimization Status
 
-### Phase 1: Compact Header (Immediate)
-**Goal:** Recover vertical space and align controls.
-*   **Action:** Convert the header to a single row.
-*   **Action:** Simplify the "Compare Mode" toggle to a more compact design.
-*   **Action:** Reduce title font size or usage of screen real estate.
+### ✅ Phase 1: Compact Header (Completed)
+*   Converted header to a single row.
+*   Simplified "Compare Mode" toggle to a compact design.
 
-### Phase 2: Immersive Map & Bottom Sheet (Future)
-**Goal:** Make the map the hero.
-*   **Concept:** The map should cover the full background.
-*   **Interaction:** Inputs should live in a "Bottom Sheet" or a collapsible card overlaid on the map.
-*   **Benefits:** Utilizes the tall aspect ratio of modern phones; feels more native.
+### ✅ Phase 2: Immersive Map & Bottom Sheet (Completed)
+*   Map is now the full-screen background hero element.
+*   Inputs and Results live in collapsible, bottom-pinned cards.
+*   Optimized for one-handed use on tall mobile screens.
 
-### Phase 3: Result Verdict
-**Goal:** Ensure the "answer" is always visible.
-*   **Action:** Move "The Verdict" (Time Saved) to a sticky footer or floating pill above the bottom navigation area.
+### ✅ Phase 3: Result Verdict (Completed)
+*   Consolidated results into a single "Verdict Card" pill above the bottom of the screen.
+*   Added an "Executive Summary" view with hours saved per month.
 
-## 3. Technical Implementation Details
-*   **CSS Framework:** Current project uses custom CSS + utility classes. Future implementations should maintain this lightweight approach.
-*   **State Management:** Ensure map resizing triggers `map.invalidateSize()` when the input panel collapses/expands.
+## 3. Future Roadmap
+*   **Shareable URLs:** Encode comparison locations into the URL for easy sharing.
+*   **Transit Modes:** Add support for Public Transit and Cycling (requires OSRM alternative or additional API).
+*   **Animations:** Refine the "Bottom Sheet" pull-up interaction with framer-motion or CSS transitions.
+
+## 4. Technical Implementation Details
+*   **CSS Framework:** Current project uses custom CSS + utility classes.
+*   **State Management:** Map resizing triggers `map.invalidateSize()` automatically when containers change.
