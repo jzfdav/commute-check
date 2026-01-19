@@ -103,34 +103,44 @@ export function App() {
 			{/* Layer 1: Floating UI */}
 			<div className="ui-layer">
 				<header className="app-header">
-					<div className="brand">
-						<MapIcon
-							style={{
-								width: "20px",
-								height: "20px",
-								color: "var(--primary-color)",
-							}}
-						/>
-						<h1 className="text-lg tracking-tight uppercase font-black">
-							Commute Check
-						</h1>
+					<div className="toggle-header">
+						<div className="brand">
+							<MapIcon
+								style={{
+									width: "20px",
+									height: "20px",
+									color: "var(--primary-color)",
+								}}
+							/>
+							<h1 className="text-lg tracking-tight uppercase font-black">
+								Commute Check
+							</h1>
+						</div>
+						<div className="tabs">
+							<button
+								type="button"
+								className={mode === "destinations" ? "active" : ""}
+								onClick={() => handleModeSwitch("destinations")}
+							>
+								Destinations
+							</button>
+							<button
+								type="button"
+								className={mode === "origins" ? "active" : ""}
+								onClick={() => handleModeSwitch("origins")}
+							>
+								Origins
+							</button>
+						</div>
 					</div>
-					<div className="tabs">
-						<button
-							type="button"
-							className={mode === "destinations" ? "active" : ""}
-							onClick={() => handleModeSwitch("destinations")}
-						>
-							Destinations
-						</button>
-						<button
-							type="button"
-							className={mode === "origins" ? "active" : ""}
-							onClick={() => handleModeSwitch("origins")}
-						>
-							Origins
-						</button>
-					</div>
+					<p
+						className="text-xs text-dim mb-4"
+						style={{ padding: "0 4px", opacity: 0.8 }}
+					>
+						{mode === "destinations"
+							? "Comparing 2 destinations from 1 starting point."
+							: "Comparing 2 starting points to 1 destination."}
+					</p>
 				</header>
 
 				<div className="panels-container">
@@ -365,93 +375,110 @@ export function App() {
 						</div>
 
 						<div className="flex flex-col gap-6">
-							<div className="grid grid-cols-2 gap-4">
-								<div className="p-4 rounded-xl glass border-A">
-									<h3 className="text-sm font-bold mb-4">
+							<div className="details-grid">
+								<div className="route-details-card border-A">
+									<div className="route-badge">Option A</div>
+									<h3 className="route-name">
 										{getShortName(
 											mode === "destinations" ? destA.name : originA.name,
 										)}
 									</h3>
-									<div className="flex flex-col gap-3">
-										<div className="metric">
-											<span className="label">
-												<Timer size={14} /> Time
-											</span>
-											<span className="value">
-												{Math.round(routeA.duration / 60)}m
-											</span>
+									<div className="metrics-list">
+										<div className="detail-metric">
+											<Timer size={16} />
+											<div className="metric-info">
+												<span className="label">Travel Time</span>
+												<span className="value">
+													{Math.round(routeA.duration / 60)} mins
+												</span>
+											</div>
 										</div>
-										<div className="metric">
-											<span className="label">
-												<MapPin size={14} /> Dist
-											</span>
-											<span className="value">
-												{(routeA.distance / 1000).toFixed(1)}km
-											</span>
+										<div className="detail-metric">
+											<MapPin size={16} />
+											<div className="metric-info">
+												<span className="label">Distance</span>
+												<span className="value">
+													{(routeA.distance / 1000).toFixed(1)} km
+												</span>
+											</div>
 										</div>
-										<div className="metric">
-											<span className="label">
-												<Activity size={14} /> Stress
-											</span>
-											<StressBadge route={routeA} />
+										<div className="detail-metric">
+											<Activity size={16} />
+											<div className="metric-info">
+												<span className="label">Stress Level</span>
+												<div className="flex items-center gap-2">
+													<span className="value uppercase">
+														{getTrafficStress(routeA).label}
+													</span>
+													<StressBadge route={routeA} />
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
 
-								<div className="p-4 rounded-xl glass border-B">
-									<h3 className="text-sm font-bold mb-4">
+								<div className="route-details-card border-B">
+									<div className="route-badge">Option B</div>
+									<h3 className="route-name">
 										{getShortName(
 											mode === "destinations" ? destB.name : originB.name,
 										)}
 									</h3>
-									<div className="flex flex-col gap-3">
-										<div className="metric">
-											<span className="label">
-												<Timer size={14} /> Time
-											</span>
-											<span className="value">
-												{Math.round(routeB.duration / 60)}m
-											</span>
+									<div className="metrics-list">
+										<div className="detail-metric">
+											<Timer size={16} />
+											<div className="metric-info">
+												<span className="label">Travel Time</span>
+												<span className="value">
+													{Math.round(routeB.duration / 60)} mins
+												</span>
+											</div>
 										</div>
-										<div className="metric">
-											<span className="label">
-												<MapPin size={14} /> Dist
-											</span>
-											<span className="value">
-												{(routeB.distance / 1000).toFixed(1)}km
-											</span>
+										<div className="detail-metric">
+											<MapPin size={16} />
+											<div className="metric-info">
+												<span className="label">Distance</span>
+												<span className="value">
+													{(routeB.distance / 1000).toFixed(1)} km
+												</span>
+											</div>
 										</div>
-										<div className="metric">
-											<span className="label">
-												<Activity size={14} /> Stress
-											</span>
-											<StressBadge route={routeB} />
+										<div className="detail-metric">
+											<Activity size={16} />
+											<div className="metric-info">
+												<span className="label">Stress Level</span>
+												<div className="flex items-center gap-2">
+													<span className="value uppercase">
+														{getTrafficStress(routeB).label}
+													</span>
+													<StressBadge route={routeB} />
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 
-							<div
-								className="p-4 rounded-xl glass"
-								style={{ borderColor: "var(--success-green)" }}
-							>
-								<div className="flex items-center gap-2 mb-2">
-									<TrendingUp size={18} color="var(--success-green)" />
-									<h3 className="text-sm font-bold uppercase tracking-tight">
-										The Bottom Line
+							<div className="bottom-line-card">
+								<div className="flex items-center gap-3 mb-3">
+									<TrendingUp size={24} className="success-icon" />
+									<h3 className="text-md font-black uppercase tracking-wider">
+										The Verdict
 									</h3>
 								</div>
-								<p className="text-sm leading-relaxed">
+								<div className="summary-text">
 									By choosing{" "}
-									<strong style={{ color: "var(--success-green)" }}>
+									<span className="winner-highlight">
 										{getShortName(winner.name)}
-									</strong>
-									, you save approximately{" "}
-									<strong>
+									</span>
+									, you recover approximately{" "}
+									<span className="savings-highlight">
 										{calculateMonthlySavings(routeA, routeB)} hours
-									</strong>{" "}
-									every month. That's valuable time recovered for what matters
-									most to you!
+									</span>{" "}
+									every month.
+								</div>
+								<p className="text-xs opacity-70 mt-2">
+									That's valuable time saved for what matters most to you!
 								</p>
 							</div>
 						</div>
