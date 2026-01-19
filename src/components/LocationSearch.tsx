@@ -4,6 +4,7 @@ import { searchLocation } from "../services/geocoding";
 import type { Location } from "../types";
 
 interface CityBias {
+	name: string;
 	lat: number;
 	lng: number;
 }

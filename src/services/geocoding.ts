@@ -13,6 +13,7 @@ const OpenLocationCodeClass = (OLC.OpenLocationCode || OLC) as unknown as {
 const olc = new OpenLocationCodeClass();
 
 interface CityBias {
+	name: string;
 	lat: number;
 	lng: number;
 }
@@ -20,7 +21,7 @@ interface CityBias {
 /**
  * Searches for a location using Photon (fuzzy search), Plus Codes, or local catalog.
  * @param query - Search query string
- * @param cityBias - Optional city coordinates to bias search results
+ * @param cityBias - Optional city coordinates and name to bias search results
  */
 export async function searchLocation(
 	query: string,
@@ -30,10 +31,13 @@ export async function searchLocation(
 
 	const bias = cityBias || DEFAULT_CITY;
 
-	// 1. Check Local Tech Parks Catalog
-	const localMatches = TECH_PARKS.filter((park) =>
-		park.name.toLowerCase().includes(query.toLowerCase()),
-	);
+	// 1. Check Local Tech Parks Catalog (filtered by city)
+	const localMatches = TECH_PARKS.filter((park) => {
+		const matchesQuery = park.name.toLowerCase().includes(query.toLowerCase());
+		const matchesCity = !bias || park.city === bias.name;
+		return matchesQuery && matchesCity;
+	});
+
 	if (localMatches.length > 0) {
 		return localMatches.map((m) => ({ ...m, name: `🏢 ${m.name}` }));
 	}
