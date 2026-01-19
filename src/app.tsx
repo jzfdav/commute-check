@@ -5,7 +5,6 @@ import {
 	MapPin,
 	Timer,
 	TrendingUp,
-	X,
 } from "lucide-preact";
 import { useEffect, useState } from "preact/hooks";
 import { Toaster } from "sonner";
@@ -358,17 +357,10 @@ export function App() {
 						role="dialog"
 						aria-modal="true"
 					>
-						<div className="flex justify-between items-center mb-6">
+						<div className="mb-4">
 							<h2 className="text-lg font-black uppercase">
 								Comparison Details
 							</h2>
-							<button
-								type="button"
-								onClick={() => setShowDetails(false)}
-								style={{ background: "transparent" }}
-							>
-								<X size={24} color="var(--text-dim)" />
-							</button>
 						</div>
 
 						<div className="flex flex-col gap-6">
@@ -452,6 +444,14 @@ export function App() {
 									That's valuable time saved for what matters most to you!
 								</p>
 							</div>
+
+							<button
+								type="button"
+								className="close-modal-btn"
+								onClick={() => setShowDetails(false)}
+							>
+								Close
+							</button>
 						</div>
 					</div>
 				</div>
