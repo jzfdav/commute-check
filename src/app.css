@@ -168,15 +168,77 @@
 .input-summary {
 	display: flex;
 	align-items: center;
-	gap: 12px;
 	width: 100%;
 	height: 100%;
-	justify-content: space-between;
 	background: transparent;
 	border: none;
 	color: inherit;
 	cursor: pointer;
 	font-family: inherit;
+	padding: 0 4px;
+}
+
+.input-summary.grid-layout {
+	display: grid;
+	grid-template-columns: 1fr 32px 1fr 32px;
+	align-items: center;
+	text-align: left;
+}
+
+.summary-col {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	min-width: 0;
+}
+
+.summary-label {
+	font-size: 8px;
+	text-transform: uppercase;
+	opacity: 0.5;
+	font-weight: 800;
+	letter-spacing: 0.5px;
+	line-height: 1;
+	margin-bottom: 2px;
+}
+
+.summary-value {
+	font-size: 10px;
+	font-weight: 700;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	line-height: 1.2;
+}
+
+.summary-arrow {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0.4;
+}
+
+.summary-arrow.reversed {
+	transform: rotate(180deg);
+}
+
+.dest-row,
+.origin-row {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 1px;
+}
+
+.dest-row:last-child,
+.origin-row:last-child {
+	margin-bottom: 0;
+}
+
+.toggle-indicator {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	opacity: 0.6;
 }
 
 .toggle-button {
@@ -324,9 +386,15 @@
 	z-index: 1;
 }
 
+.footer-column {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
 .footer-column h4 {
 	font-size: 0.8rem;
-	margin-bottom: 4px;
+	margin: 0;
 	color: var(--text-color);
 	overflow: hidden;
 	text-overflow: ellipsis;

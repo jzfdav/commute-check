@@ -1,4 +1,5 @@
 import {
+	ArrowRight,
 	ChevronDown,
 	ChevronUp,
 	Clock,
@@ -125,22 +126,67 @@ export function App() {
 						{isInputCollapsed ? (
 							<button
 								type="button"
-								className="input-summary"
+								className="input-summary grid-layout"
 								onClick={() => {
 									setIsInputCollapsed(false);
 									setIsResultsCollapsed(true);
 								}}
 							>
-								<div className="flex items-center gap-3">
-									<MapPin size={16} color="var(--primary-color)" />
-									<span className="text-xs font-bold uppercase tracking-wider">
-										{mode === "destinations"
-											? `${getShortName(originA.name)} → ${getShortName(destA.name)} vs ${getShortName(destB.name)}`
-											: `${getShortName(originA.name)} vs ${getShortName(originB.name)} → ${getShortName(destA.name)}`}
-									</span>
-								</div>
-								<div className="toggle-button">
-									<ChevronDown size={18} />
+								{mode === "destinations" ? (
+									<>
+										<div className="summary-col origin-col">
+											<span className="summary-label">From</span>
+											<span className="summary-value">
+												{getShortName(originA.name)}
+											</span>
+										</div>
+										<div className="summary-arrow">
+											<ArrowRight size={16} />
+										</div>
+										<div className="summary-col dest-col">
+											<div className="dest-row">
+												<span className="summary-label">A</span>
+												<span className="summary-value">
+													{getShortName(destA.name)}
+												</span>
+											</div>
+											<div className="dest-row">
+												<span className="summary-label">B</span>
+												<span className="summary-value">
+													{getShortName(destB.name)}
+												</span>
+											</div>
+										</div>
+									</>
+								) : (
+									<>
+										<div className="summary-col origin-col">
+											<div className="origin-row">
+												<span className="summary-label">A</span>
+												<span className="summary-value">
+													{getShortName(originA.name)}
+												</span>
+											</div>
+											<div className="origin-row">
+												<span className="summary-label">B</span>
+												<span className="summary-value">
+													{getShortName(originB.name)}
+												</span>
+											</div>
+										</div>
+										<div className="summary-arrow reversed">
+											<ArrowRight size={16} />
+										</div>
+										<div className="summary-col dest-col">
+											<span className="summary-label">To</span>
+											<span className="summary-value">
+												{getShortName(destA.name)}
+											</span>
+										</div>
+									</>
+								)}
+								<div className="toggle-indicator">
+									<ChevronDown size={14} />
 								</div>
 							</button>
 						) : (
@@ -299,6 +345,11 @@ export function App() {
 								{!isResultsCollapsed && (
 									<div className="comparison-footer">
 										<div className="footer-column">
+											<div className="flex items-center gap-2">
+												<span className="text-xs font-bold">
+													{Math.round(routeA.duration / 60)} mins
+												</span>
+											</div>
 											<h4
 												title={
 													mode === "destinations" ? destA.name : originA.name
@@ -308,11 +359,6 @@ export function App() {
 													mode === "destinations" ? destA.name : originA.name,
 												)}
 											</h4>
-											<div className="flex items-center gap-2">
-												<span className="text-xs font-bold">
-													{Math.round(routeA.duration / 60)}m
-												</span>
-											</div>
 										</div>
 										<div
 											className="footer-column"
@@ -321,6 +367,11 @@ export function App() {
 												paddingLeft: "12px",
 											}}
 										>
+											<div className="flex items-center gap-2">
+												<span className="text-xs font-bold">
+													{Math.round(routeB.duration / 60)} mins
+												</span>
+											</div>
 											<h4
 												title={
 													mode === "destinations" ? destB.name : originB.name
@@ -330,11 +381,6 @@ export function App() {
 													mode === "destinations" ? destB.name : originB.name,
 												)}
 											</h4>
-											<div className="flex items-center gap-2">
-												<span className="text-xs font-bold">
-													{Math.round(routeB.duration / 60)}m
-												</span>
-											</div>
 										</div>
 									</div>
 								)}
