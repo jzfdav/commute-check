@@ -11,25 +11,36 @@ describe("searchLocation", () => {
 		vi.restoreAllMocks();
 	});
 
-	it("should return empty array for short query", async () => {
-		const results = await searchLocation("ab");
+	it("should return empty array for very short query", async () => {
+		const results = await searchLocation("a");
 		expect(results).toEqual([]);
 		expect(fetch).not.toHaveBeenCalled();
 	});
 
 	it("should return cached results if available", async () => {
 		const mockData = [{ name: "Cached Place", lat: 10, lng: 20 }];
-		localStorage.setItem("geo_cached place", JSON.stringify(mockData));
+		// Note the new cache key prefix geoV2_
+		localStorage.setItem("geoV2_cached place", JSON.stringify(mockData));
 
 		const results = await searchLocation("Cached Place");
 		expect(results).toEqual(mockData);
 		expect(fetch).not.toHaveBeenCalled();
 	});
 
-	it("should fetch and return results from API", async () => {
-		const mockResponse = [
-			{ display_name: "New Place", lat: "12.34", lon: "56.78" },
-		];
+	it("should fetch and return results from Photon API", async () => {
+		const mockResponse = {
+			features: [
+				{
+					properties: {
+						name: "New Place",
+						city: "Bengaluru",
+					},
+					geometry: {
+						coordinates: [56.78, 12.34], // [lon, lat]
+					},
+				},
+			],
+		};
 
 		vi.mocked(fetch).mockResolvedValue({
 			ok: true,
@@ -39,10 +50,10 @@ describe("searchLocation", () => {
 		const results = await searchLocation("New Place");
 
 		expect(results).toHaveLength(1);
-		expect(results[0].name).toBe("New Place");
+		expect(results[0].name).toContain("New Place");
 		expect(results[0].lat).toBe(12.34);
 		expect(results[0].lng).toBe(56.78);
-		expect(localStorage.getItem("geo_new place")).toBeTruthy();
+		expect(localStorage.getItem("geoV2_new place")).toBeTruthy();
 	});
 
 	it("should handle API errors gracefully", async () => {
@@ -65,5 +76,21 @@ describe("searchLocation", () => {
 
 		expect(results).toEqual([]);
 		expect(consoleSpy).toHaveBeenCalled();
+	});
+
+	it("should return tech park from local catalog without fetch", async () => {
+		const results = await searchLocation("Manyata");
+		expect(results.length).toBeGreaterThan(0);
+		expect(results[0].name).toContain("Manyata Tech Park");
+		expect(fetch).not.toHaveBeenCalled();
+	});
+
+	it("should decode Plus Codes without fetch", async () => {
+		const results = await searchLocation("3HC4+76W");
+		expect(results).toHaveLength(1);
+		expect(results[0].name).toContain("Plus Code");
+		// Allowing a bit more tolerance or using the specific library output
+		expect(results[0].lat).toBeCloseTo(13.0707, 2);
+		expect(fetch).not.toHaveBeenCalled();
 	});
 });

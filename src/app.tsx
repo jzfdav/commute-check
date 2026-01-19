@@ -1,16 +1,22 @@
 import {
 	Activity,
+	ChevronDown,
+	ChevronUp,
 	Map as MapIcon,
 	MapPin,
 	Timer,
 	TrendingUp,
+	X,
 } from "lucide-preact";
+import { useEffect, useState } from "preact/hooks";
 import { Toaster } from "sonner";
 import { LocationSearch } from "./components/LocationSearch";
 import { CommuteMap } from "./components/Map";
 import { useCommuteComparison } from "./hooks/useCommuteComparison";
+import type { RouteData } from "./types";
 import {
 	calculateMonthlySavings,
+	getShortName,
 	getTrafficStress,
 } from "./utils/calculations";
 import "./app.css";
@@ -30,6 +36,52 @@ export function App() {
 		routeA,
 		routeB,
 	} = useCommuteComparison();
+
+	const [showDetails, setShowDetails] = useState(false);
+	const [isInputCollapsed, setIsInputCollapsed] = useState(false);
+	const [isResultsCollapsed, setIsResultsCollapsed] = useState(false);
+
+	// Auto-collapse when both routes are loaded
+	useEffect(() => {
+		if (routeA && routeB) {
+			setIsInputCollapsed(true);
+			setIsResultsCollapsed(false);
+		}
+	}, [!!routeA, !!routeB]);
+
+	const isAFaster = routeA && routeB && routeA.duration < routeB.duration;
+	const winner = isAFaster
+		? mode === "destinations"
+			? destA
+			: originA
+		: mode === "destinations"
+			? destB
+			: originB;
+	const loser = isAFaster
+		? mode === "destinations"
+			? destB
+			: originB
+		: mode === "destinations"
+			? destA
+			: originA;
+
+	const handleMouseMove = (e: MouseEvent) => {
+		const card = e.currentTarget as HTMLElement;
+		const rect = card.getBoundingClientRect();
+		const x = e.clientX - rect.left;
+		const y = e.clientY - rect.top;
+		card.style.setProperty("--mouse-x", `${x}px`);
+		card.style.setProperty("--mouse-y", `${y}px`);
+	};
+
+	const StressBadge = ({ route }: { route: RouteData }) => {
+		const stress = getTrafficStress(route);
+		return (
+			<span className={`stress-badge stress-${stress.label.toLowerCase()}`}>
+				{stress.label}
+			</span>
+		);
+	};
 
 	return (
 		<div className="immersive-container">
@@ -83,175 +135,315 @@ export function App() {
 
 				<div className="panels-container">
 					{/* Floating Input Panel */}
-					<aside className="floating-panel input-panel animate-in">
-						<div className="flex items-center gap-2 mb-4">
-							<MapPin size={18} color="var(--primary-color)" />
-							<h2 className="text-sm uppercase tracking-wider font-bold">
-								Locations
-							</h2>
-						</div>
-						<div className="flex flex-col gap-4">
-							{mode === "destinations" ? (
-								<>
-									<LocationSearch
-										label="Start (Home)"
-										value={originA}
-										onChange={setOriginA}
-									/>
-									<LocationSearch
-										label="Option A (Work)"
-										value={destA}
-										onChange={setDestA}
-									/>
-									<LocationSearch
-										label="Option B (Work)"
-										value={destB}
-										onChange={setDestB}
-									/>
-								</>
-							) : (
-								<>
-									<LocationSearch
-										label="Option A (Home)"
-										value={originA}
-										onChange={setOriginA}
-									/>
-									<LocationSearch
-										label="Option B (Home)"
-										value={originB}
-										onChange={setOriginB}
-									/>
-									<LocationSearch
-										label="Destination (Work)"
-										value={destA}
-										onChange={setDestA}
-									/>
-								</>
-							)}
-						</div>
+					<aside
+						className={`floating-panel input-panel animate-in ${isInputCollapsed ? "collapsed" : ""}`}
+					>
+						{isInputCollapsed ? (
+							<button
+								type="button"
+								className="input-summary"
+								onClick={() => setIsInputCollapsed(false)}
+							>
+								<div className="flex items-center gap-3">
+									<MapPin size={16} color="var(--primary-color)" />
+									<span className="text-xs font-bold uppercase tracking-wider">
+										{mode === "destinations"
+											? `${getShortName(originA.name)} → ${getShortName(destA.name)} vs ${getShortName(destB.name)}`
+											: `${getShortName(originA.name)} vs ${getShortName(originB.name)} → ${getShortName(destA.name)}`}
+									</span>
+								</div>
+								<div className="toggle-button">
+									<ChevronDown size={18} />
+								</div>
+							</button>
+						) : (
+							<>
+								<div className="flex justify-between items-center mb-4">
+									<div className="flex items-center gap-2">
+										<MapPin size={18} color="var(--primary-color)" />
+										<h2 className="text-sm uppercase tracking-wider font-bold">
+											Locations
+										</h2>
+									</div>
+									{routeA && routeB && (
+										<button
+											type="button"
+											className="toggle-button"
+											onClick={() => setIsInputCollapsed(true)}
+										>
+											<ChevronUp size={18} />
+										</button>
+									)}
+								</div>
+								<div className="flex flex-col gap-4">
+									{mode === "destinations" ? (
+										<>
+											<LocationSearch
+												label="Starting Point"
+												value={originA}
+												onChange={setOriginA}
+											/>
+											<LocationSearch
+												label="Option A"
+												value={destA}
+												onChange={setDestA}
+											/>
+											<LocationSearch
+												label="Option B"
+												value={destB}
+												onChange={setDestB}
+											/>
+										</>
+									) : (
+										<>
+											<LocationSearch
+												label="Option A"
+												value={originA}
+												onChange={setOriginA}
+											/>
+											<LocationSearch
+												label="Option B"
+												value={originB}
+												onChange={setOriginB}
+											/>
+											<LocationSearch
+												label="Destination"
+												value={destA}
+												onChange={setDestA}
+											/>
+										</>
+									)}
+								</div>
+							</>
+						)}
 					</aside>
 
 					{/* Floating Results Panel */}
-					{(routeA || routeB) && (
-						<div className="results-container">
-							{/* Verdict Pill */}
-							{routeA && routeB && (
-								<div
-									className="floating-panel animate-in"
-									style={{ marginBottom: "16px", minWidth: "200px" }}
-								>
-									<div className="flex items-center gap-2 mb-2">
-										<TrendingUp size={14} color="var(--success-green)" />
-										<h3 className="text-xs uppercase text-dim">Verdict</h3>
+					{routeA && routeB && (
+						<div
+							className={`results-container ${isResultsCollapsed ? "collapsed" : ""}`}
+						>
+							<button
+								type="button"
+								className="verdict-card animate-in text-left w-full"
+								onClick={() => setShowDetails(true)}
+								onMouseMove={handleMouseMove}
+							>
+								<div className="verdict-header">
+									<div className="flex justify-between items-start">
+										<h3 className="verdict-title">
+											<span>🎉 </span>
+											<span style={{ color: "var(--success-green)" }}>
+												{getShortName(winner.name)}
+											</span>
+											<span> is faster</span>
+										</h3>
+										<div
+											className="toggle-button"
+											onClick={(e) => {
+												e.stopPropagation();
+												setIsResultsCollapsed(!isResultsCollapsed);
+											}}
+											onKeyDown={(e) => {
+												if (e.key === "Enter" || e.key === " ") {
+													e.stopPropagation();
+													setIsResultsCollapsed(!isResultsCollapsed);
+												}
+											}}
+											// biome-ignore lint/a11y/useSemanticElements: Nesting buttons causes issues, using role="button"
+											role="button"
+											tabIndex={0}
+										>
+											{isResultsCollapsed ? (
+												<ChevronUp size={18} />
+											) : (
+												<ChevronDown size={18} />
+											)}
+										</div>
 									</div>
-									<div className="text-sm">
-										{routeA.duration < routeB.duration ? (
-											<span
-												style={{
-													color: "var(--success-green)",
-													fontWeight: "bold",
-												}}
-											>
-												Option A is faster.
-											</span>
-										) : (
-											<span
-												style={{
-													color: "var(--success-green)",
-													fontWeight: "bold",
-												}}
-											>
-												Option B is faster.
-											</span>
-										)}
-										<div className="mt-2 text-xs opacity-80">
+									{!isResultsCollapsed && (
+										<p className="verdict-subtext">
 											Save{" "}
 											<strong>
 												{calculateMonthlySavings(routeA, routeB)} hours
-											</strong>{" "}
-											per month.
+											</strong>
+											/mo compared to {getShortName(loser.name)}
+										</p>
+									)}
+								</div>
+
+								{!isResultsCollapsed && (
+									<div className="comparison-footer">
+										<div className="footer-column">
+											<h4
+												title={
+													mode === "destinations" ? destA.name : originA.name
+												}
+											>
+												{getShortName(
+													mode === "destinations" ? destA.name : originA.name,
+												)}
+											</h4>
+											<div className="flex items-center gap-2">
+												<span className="text-xs font-bold">
+													{Math.round(routeA.duration / 60)}m
+												</span>
+												<StressBadge route={routeA} />
+											</div>
+										</div>
+										<div
+											className="footer-column"
+											style={{
+												borderLeft: "1px solid rgba(255,255,255,0.08)",
+												paddingLeft: "12px",
+											}}
+										>
+											<h4
+												title={
+													mode === "destinations" ? destB.name : originB.name
+												}
+											>
+												{getShortName(
+													mode === "destinations" ? destB.name : originB.name,
+												)}
+											</h4>
+											<div className="flex items-center gap-2">
+												<span className="text-xs font-bold">
+													{Math.round(routeB.duration / 60)}m
+												</span>
+												<StressBadge route={routeB} />
+											</div>
 										</div>
 									</div>
-								</div>
-							)}
-
-							{/* Comparison Cards */}
-							{routeA && (
-								<div className="result-card border-A animate-in">
-									<div className="stress-header">
-										<h3 className="text-sm font-bold">Option A</h3>
-										{(() => {
-											const stress = getTrafficStress(routeA);
-											return (
-												<span
-													className={`stress-badge stress-${stress.label.toLowerCase()}`}
-												>
-													<Activity size={10} />
-													{stress.label}
-												</span>
-											);
-										})()}
-									</div>
-									<div className="metric">
-										<span className="label">
-											<Timer size={14} /> Time
-										</span>
-										<span className="value">
-											{Math.round(routeA.duration / 60)}m
-										</span>
-									</div>
-									<div className="metric">
-										<span className="label">
-											<MapPin size={14} /> Distance
-										</span>
-										<span className="value">
-											{(routeA.distance / 1000).toFixed(1)}km
-										</span>
-									</div>
-								</div>
-							)}
-
-							{routeB && (
-								<div
-									className="result-card border-B animate-in"
-									style={{ animationDelay: "0.1s" }}
-								>
-									<div className="stress-header">
-										<h3 className="text-sm font-bold">Option B</h3>
-										{(() => {
-											const stress = getTrafficStress(routeB);
-											return (
-												<span
-													className={`stress-badge stress-${stress.label.toLowerCase()}`}
-												>
-													<Activity size={10} />
-													{stress.label}
-												</span>
-											);
-										})()}
-									</div>
-									<div className="metric">
-										<span className="label">
-											<Timer size={14} /> Time
-										</span>
-										<span className="value">
-											{Math.round(routeB.duration / 60)}m
-										</span>
-									</div>
-									<div className="metric">
-										<span className="label">
-											<MapPin size={14} /> Distance
-										</span>
-										<span className="value">
-											{(routeB.distance / 1000).toFixed(1)}km
-										</span>
-									</div>
-								</div>
-							)}
+								)}
+							</button>
 						</div>
 					)}
 				</div>
 			</div>
+
+			{/* Comparison Details Modal */}
+			{showDetails && routeA && routeB && (
+				<div
+					className="overlay"
+					onClick={() => setShowDetails(false)}
+					onKeyDown={(e) => e.key === "Escape" && setShowDetails(false)}
+					role="none"
+				>
+					<div
+						className="modal animate-in"
+						onClick={(e) => e.stopPropagation()}
+						onKeyDown={(e) => e.stopPropagation()}
+						role="dialog"
+						aria-modal="true"
+					>
+						<div className="flex justify-between items-center mb-6">
+							<h2 className="text-lg font-black uppercase">
+								Comparison Details
+							</h2>
+							<button
+								type="button"
+								onClick={() => setShowDetails(false)}
+								style={{ background: "transparent" }}
+							>
+								<X size={24} color="var(--text-dim)" />
+							</button>
+						</div>
+
+						<div className="flex flex-col gap-6">
+							<div className="grid grid-cols-2 gap-4">
+								<div className="p-4 rounded-xl glass border-A">
+									<h3 className="text-sm font-bold mb-4">
+										{getShortName(
+											mode === "destinations" ? destA.name : originA.name,
+										)}
+									</h3>
+									<div className="flex flex-col gap-3">
+										<div className="metric">
+											<span className="label">
+												<Timer size={14} /> Time
+											</span>
+											<span className="value">
+												{Math.round(routeA.duration / 60)}m
+											</span>
+										</div>
+										<div className="metric">
+											<span className="label">
+												<MapPin size={14} /> Dist
+											</span>
+											<span className="value">
+												{(routeA.distance / 1000).toFixed(1)}km
+											</span>
+										</div>
+										<div className="metric">
+											<span className="label">
+												<Activity size={14} /> Stress
+											</span>
+											<StressBadge route={routeA} />
+										</div>
+									</div>
+								</div>
+
+								<div className="p-4 rounded-xl glass border-B">
+									<h3 className="text-sm font-bold mb-4">
+										{getShortName(
+											mode === "destinations" ? destB.name : originB.name,
+										)}
+									</h3>
+									<div className="flex flex-col gap-3">
+										<div className="metric">
+											<span className="label">
+												<Timer size={14} /> Time
+											</span>
+											<span className="value">
+												{Math.round(routeB.duration / 60)}m
+											</span>
+										</div>
+										<div className="metric">
+											<span className="label">
+												<MapPin size={14} /> Dist
+											</span>
+											<span className="value">
+												{(routeB.distance / 1000).toFixed(1)}km
+											</span>
+										</div>
+										<div className="metric">
+											<span className="label">
+												<Activity size={14} /> Stress
+											</span>
+											<StressBadge route={routeB} />
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div
+								className="p-4 rounded-xl glass"
+								style={{ borderColor: "var(--success-green)" }}
+							>
+								<div className="flex items-center gap-2 mb-2">
+									<TrendingUp size={18} color="var(--success-green)" />
+									<h3 className="text-sm font-bold uppercase tracking-tight">
+										The Bottom Line
+									</h3>
+								</div>
+								<p className="text-sm leading-relaxed">
+									By choosing{" "}
+									<strong style={{ color: "var(--success-green)" }}>
+										{getShortName(winner.name)}
+									</strong>
+									, you save approximately{" "}
+									<strong>
+										{calculateMonthlySavings(routeA, routeB)} hours
+									</strong>{" "}
+									every month. That's valuable time recovered for what matters
+									most to you!
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 }

@@ -71,3 +71,13 @@ export function decodePolyline(str: string): [number, number][] {
 
 	return coordinates;
 }
+export function getShortName(fullName: string): string {
+	if (!fullName) return "Unknown";
+	// Extract the first part of the name (before the first comma)
+	const shortName = fullName.split(",")[0].trim();
+	// If it's too short (like a house number), try getting the next part if available
+	if (shortName.length < 3 && fullName.includes(",")) {
+		return fullName.split(",")[1].trim();
+	}
+	return shortName;
+}
