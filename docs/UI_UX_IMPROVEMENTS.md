@@ -14,6 +14,7 @@ Based on visual inspection and screenshot analysis, several areas for improvemen
 ### ✅ Phase 1: Compact Header (Completed)
 *   Converted header to a single row.
 *   Simplified "Compare Mode" toggle to a compact design.
+*   Added city switcher buttons for quick multi-city navigation.
 
 ### ✅ Phase 2: Immersive Map & Bottom Sheet (Completed)
 *   Map is now the full-screen background hero element.
@@ -23,6 +24,12 @@ Based on visual inspection and screenshot analysis, several areas for improvemen
 ### ✅ Phase 3: Result Verdict (Completed)
 *   Consolidated results into a single "Verdict Card" pill above the bottom of the screen.
 *   Added an "Executive Summary" view with hours saved per month.
+*   Travel times displayed with "mins" unit for clarity.
+
+### ✅ Phase 4: Collapsed Input Summary (Completed)
+*   2x2 grid layout for collapsed input pane.
+*   'vs' separator with horizontal lines for visual balance.
+*   Directional arrow indicating commute flow.
 
 ## 3. Future Roadmap
 *   **Shareable URLs:** Encode comparison locations into the URL for easy sharing.
@@ -32,3 +39,4 @@ Based on visual inspection and screenshot analysis, several areas for improvemen
 ## 4. Technical Implementation Details
 *   **CSS Framework:** Current project uses custom CSS + utility classes.
 *   **State Management:** Map resizing triggers `map.invalidateSize()` automatically when containers change.
+*   **Location Catalog:** ~40 locations with `city` and `category` metadata for smart filtering and visual cues.

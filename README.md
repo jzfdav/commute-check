@@ -4,9 +4,11 @@
 
 ## Features
 *   **Compare Two Scenarios:** Toggle between comparing destinations or origins.
-*   **🚀 Smart Search**: Advanced geocoding supporting **Photon** (fuzzy), **Google Plus Codes**, and a local **Bangalore Tech Park Catalog**.
+*   **🏙️ Multi-City Support**: Pre-configured for **Bengaluru** and **Pune** with city-specific defaults and map centering.
+*   **🚀 Smart Search**: Advanced geocoding supporting **Photon** (fuzzy), **Google Plus Codes**, and a local **Location Catalog** with ~40 tech parks and residential hubs.
+*   **🏢🏠 Visual Categories**: Search results are visually distinguished with icons (🏢 Office, 🏠 Residential).
 *   **The "Verdict" Engine:** Instantly see hours saved per month in a consolidated card.
-*   **Traffic Stress Score:** Identify stressful routes with color-coded badges.
+*   **Traffic Stress Score:** Identify stressful routes with color-coded badges (Worst Peak 2.8x multiplier).
 *   **📱 Mobile Ergonomics**: Optimized bottom-pinned, collapsible panels for one-handed map navigation.
 *   **Visual Map Comparison:** Dual-route visualization (Blue vs. Purple).
 *   **Offline Ready:** Installable on iOS/Android. Works without internet.
