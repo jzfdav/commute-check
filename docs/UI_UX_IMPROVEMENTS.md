@@ -24,7 +24,7 @@ Based on visual inspection and screenshot analysis, several areas for improvemen
 ### ✅ Phase 3: Result Verdict (Completed)
 *   Consolidated results into a single "Verdict Card" pill above the bottom of the screen.
 *   Added an "Executive Summary" view with hours saved per month.
-*   Travel times displayed with "mins" unit for clarity.
+*   Travel times displayed with smart formatting (e.g., "1h 15m") for clarity.
 
 ### ✅ Phase 4: Collapsed Input Summary (Completed)
 *   2x2 grid layout for collapsed input pane.
@@ -33,8 +33,8 @@ Based on visual inspection and screenshot analysis, several areas for improvemen
 
 ## 3. Future Roadmap
 *   **Shareable URLs:** Encode comparison locations into the URL for easy sharing.
-*   **Transit Modes:** Add support for Public Transit and Cycling (requires OSRM alternative or additional API).
-*   **Animations:** Refine the "Bottom Sheet" pull-up interaction with framer-motion or CSS transitions.
+*   **Transit Modes:** Add support for Public Transit and Cycling.
+*   **Animations:** Refine the "Bottom Sheet" pull-up interaction.
 
 ## 4. Technical Implementation Details
 *   **CSS Framework:** Current project uses custom CSS + utility classes.

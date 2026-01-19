@@ -15,7 +15,7 @@ Commute Check is a Progressive Web App (PWA) designed to help users make informe
 4.  **Smart Metrics & "The Verdict":**
     *   **The Verdict:** A consolidated executive summary card calculating "Hours Saved Per Month".
     *   **Comparison Details:** Side-by-side modal for deep dives into duration, distance, and stress.
-    *   **Traffic Stress Score:** Uses a Worst Peak (2.8x) multiplier for realistic planning.
+    *   **Traffic Stress Score:** Uses dynamic multipliers (Normal 1.2x, Worst Peak 5.5x) for realistic planning.
 5.  **Smart Geocoding Strategy:**
     *   **Photon API:** High-quality fuzzy search for landmarks and addresses.
     *   **Google Plus Codes:** Local decoding for precision without API costs.

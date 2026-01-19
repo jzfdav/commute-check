@@ -8,7 +8,7 @@
 *   **🚀 Smart Search**: Advanced geocoding supporting **Photon** (fuzzy), **Google Plus Codes**, and a local **Location Catalog** with ~40 tech parks and residential hubs.
 *   **🏢🏠 Visual Categories**: Search results are visually distinguished with icons (🏢 Office, 🏠 Residential).
 *   **The "Verdict" Engine:** Instantly see hours saved per month in a consolidated card.
-*   **Traffic Stress Score:** Identify stressful routes with color-coded badges (Worst Peak 2.8x multiplier).
+*   **Traffic Stress Score:** Identify stressful routes with color-coded badges (Worst Peak 5.5x multiplier).
 *   **📱 Mobile Ergonomics**: Optimized bottom-pinned, collapsible panels for one-handed map navigation.
 *   **Visual Map Comparison:** Dual-route visualization (Blue vs. Purple).
 *   **Offline Ready:** Installable on iOS/Android. Works without internet.
