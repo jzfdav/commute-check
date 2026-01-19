@@ -357,8 +357,8 @@ export function App() {
 						role="dialog"
 						aria-modal="true"
 					>
-						<div className="flex flex-col justify-evenly h-full">
-							<div className="mb-2">
+						<div className="flex flex-col justify-between h-full">
+							<div>
 								<h2 className="text-lg font-black uppercase">
 									Comparison Details
 								</h2>
